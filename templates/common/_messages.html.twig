@@ -1,0 +1,15 @@
+{% for msg in app.flashes('success') %}
+	<div class="alert alert-success margin-top-13">
+		{{ msg }}
+	</div>
+{% endfor %}
+{% for msg in app.flashes('error') %}
+	<div class="alert alert-danger margin-top-13">
+		{{ msg }}
+	</div>
+{% endfor %}
+{% for msg in app.flashes('warning') %}
+	<div class="alert alert-warning margin-top-13">
+		{{ msg }}
+	</div>
+{% endfor %}

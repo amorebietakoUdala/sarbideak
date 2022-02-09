@@ -1,0 +1,29 @@
+#  Titles 
+title.appTitle: "Consigna"
+title.kutxa.uploadFile: "Subir fichero"
+
+#  Forms
+upload.file: "Fichero"
+upload.senderEmail: "Email del emisor"
+upload.receiverEmail: "Email del receptor"
+
+#  Buttons
+btn.send: "Enviar"
+
+#  Messages
+message.fileSaved: "El fichero se ha guardado correctamente"
+message.emailTextReceiver: "Le han enviado un fichero a través de consigna. Los datos del envío son los siguientes:"
+message.emailTextSender: |
+  Su fichero se ha guardado correctamente en consigna.
+  Si desea registrarlo deberá hacer una solicitud a través de sede electrónica indicando el indentificador SHA1 que aparece a continuación.
+message.emailSubjectReceiver: "Se te ha enviado un fitxero a través de consigna"
+message.emailSubjectSender: "Su fichero se ha guardado en la consigna"
+
+#  Error
+message.domainNotAllowed: "El email del receptor tiene que ser del dominio ''{receiverDomain}''"
+
+# Label
+label.cif: "CIF"
+label.dni: "DNI"
+label.sha1: "SHA1"
+label.size: "Tamaño"

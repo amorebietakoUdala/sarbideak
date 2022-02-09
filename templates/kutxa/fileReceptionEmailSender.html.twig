@@ -1,0 +1,12 @@
+
+{{ 'message.emailTextSender' | trans }}
+<br>
+{{ 'label.sha1' | trans }}: {{ data['sha1'] }}<br>
+{{ 'upload.file' | trans }}: {{ data['fileName'] }}<br>
+{{ 'label.size' | trans }}: {{ data['size'] }}<br>
+{% if giltzaUser['cif'] != null and giltzaUser['cif'] != 'EMPTY' %}
+   {{ 'label.cif' | trans }}: {{ giltzaUser['cif'] }}<br>
+{% endif %}
+{{ 'label.dni' | trans }}: {{ giltzaUser['dni'] }}<br>
+{{ 'upload.senderEmail' | trans }}: {{ data['senderEmail'] }}<br>
+{{ 'upload.receiverEmail' | trans }}: {{ data['receiverEmail'] }}<br>

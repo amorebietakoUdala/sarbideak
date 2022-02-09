@@ -1,0 +1,26 @@
+<div class="container-fluid" {{ stimulus_controller('file-size', {
+      'locale' : app.request.locale|split('_')[0],
+      'maxFileSize' : maxFileSize
+   }) }}>
+   {{ form_start(form, { 'attr': {'data-action': 'file-size#submit'} }) }}
+      <div class="row align-items-center">
+         <div class="col-auto">
+            {{ form_row(form.file, {'attr' : { 
+               'data-file-size-target' : 'file', 
+               'data-action': 'change->file-size#checkMaxFileSize' } 
+               }) 
+            }}
+         </div>
+         <div class="col-auto" data-file-size-target="size"></div>
+         <div class="col-auto">
+            {{ form_row(form.senderEmail) }}
+         </div>
+         <div class="col-auto">
+            {{ form_row(form.receiverEmail) }}
+         </div>
+         <div class="col-auto">
+            <button class="btn btn-primary">{{ button_label|default('btn.send'|trans) }}</button>
+         </div>
+      </div>
+   {{ form_end(form) }}
+</div>

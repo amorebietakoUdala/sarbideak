@@ -1,0 +1,4 @@
+message.error: "Error"
+btn.ok: "Aceptar"
+
+maxFileSizeExceeded: "El tamaño del fichero de es demasiado largo ({fileSize}). El máximo es {maxFileSize}"

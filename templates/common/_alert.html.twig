@@ -1,0 +1,13 @@
+{% trans_default_domain 'alerts' %}
+
+<template id="error">
+	<swal-title>
+		{{ 'message.error' | trans }}
+	</swal-title>
+	<swal-icon type="error" color="red"></swal-icon>
+   <swal-html>Loading...</swal-html>
+	<swal-button type="confirm">
+		{{ 'btn.ok' | trans }}
+	</swal-button>
+	<swal-param name="allowEscapeKey" value="true"/>
+</template>
