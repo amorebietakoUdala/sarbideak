@@ -65,6 +65,18 @@
     "ralouphie/getallheaders": {
         "version": "3.0.3"
     },
+    "symfony/apache-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "9d254a22efca7264203eea98b866f16f944b2f09"
+        },
+        "files": [
+            "public/.htaccess"
+        ]
+    },
     "symfony/asset": {
         "version": "v5.4.3"
     },
@@ -219,9 +231,6 @@
     "symfony/options-resolver": {
         "version": "v5.4.3"
     },
-    "symfony/password-hasher": {
-        "version": "v5.4.3"
-    },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.24.0"
     },
@@ -266,30 +275,6 @@
         ]
     },
     "symfony/runtime": {
-        "version": "v5.4.3"
-    },
-    "symfony/security-bundle": {
-        "version": "5.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.3",
-            "ref": "09b5e809bd7a992061febd05b797c64a2d93b5cd"
-        },
-        "files": [
-            "config/packages/security.yaml"
-        ]
-    },
-    "symfony/security-core": {
-        "version": "v5.4.3"
-    },
-    "symfony/security-csrf": {
-        "version": "v5.4.3"
-    },
-    "symfony/security-guard": {
-        "version": "v5.4.3"
-    },
-    "symfony/security-http": {
         "version": "v5.4.3"
     },
     "symfony/serializer": {

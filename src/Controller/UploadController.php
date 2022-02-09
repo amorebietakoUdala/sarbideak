@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class KutxaController extends AbstractController
+class UploadController extends AbstractController
 {
  
     private $mailer;
@@ -30,7 +30,7 @@ class KutxaController extends AbstractController
     }
 
     /**
-     * @Route("/{_locale}/kutxa", name="app_kutxa")
+     * @Route("/{_locale}/upload", name="app_kutxa")
      */
     public function upload(Request $request, SluggerInterface $slugger): Response
     {

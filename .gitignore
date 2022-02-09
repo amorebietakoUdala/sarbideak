@@ -12,6 +12,7 @@
 /node_modules/
 /public/build/
 /public/uploads/
+/public/translations/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
