@@ -149,7 +149,7 @@ class UploadController extends AbstractController
             ->subject($subject)
             ->htmlTemplate($template)
             ->context($context);
-        if ( $this->getParameter('mailerBCC') ) {
+        if ( $this->getParameter('sendBCC') ) {
             $addresses = [$this->getParameter('mailerBCC')];
             foreach ($addresses as $address) {
                 $email->addBcc($address);
