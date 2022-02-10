@@ -1,3 +1,4 @@
+{% apply inline_css(source('@styles/email.css')) %}
 <!DOCTYPE html>
 <html lang="{{ app.request.locale|split('_')[0] }}">
     <head>
@@ -20,3 +21,4 @@
       <b>{{ 'upload.receiverEmail' | trans }}:</b> {{ data['receiverEmail'] }}<br>
    </body>
 </html>
+{% endapply %}
