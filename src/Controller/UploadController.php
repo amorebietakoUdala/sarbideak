@@ -83,9 +83,6 @@ class UploadController extends AbstractController
         $error = false;
         if ($file) {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            // this is needed to safely include the file name as part of the URL
-            // $safeFilename = $slugger->slug($originalFilename);
-            // $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
             $newFilename = $originalFilename.'.'.$file->getClientOriginalExtension();
 
             try {
