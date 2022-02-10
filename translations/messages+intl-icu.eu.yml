@@ -1,0 +1,29 @@
+#  Titles 
+title.appTitle: "Kutxa"
+title.kutxa.uploadFile: "Fitxategia igo"
+
+#  Forms
+upload.file: "Fitxategia"
+upload.senderEmail: "Bidaltzailearen emaila"
+upload.receiverEmail: "Jasotzailearen emaila"
+
+#  Buttons
+btn.send: "Bidali"
+
+#  Messages
+message.fileSaved: "Fitxategia behar bezala gorde da"
+message.emailTextReceiver: "Kutxa bidez fitxategi bat bidali dizute. Bidalketaren datuak hauek dira:"
+message.emailTextSender: |
+  Zure fitxategia behar bezala gorde da kutxan.
+  Erregistratu nahi baduzu, egizu eskari bat egoitza elektronikotik beherago datorren SHA1 identifikatzailea adieraziz.
+message.emailSubjectReceiver: "Kutxa bidez fitxategi bat bidali dizute"
+message.emailSubjectSender: "Fitxategia kutxan gorde egin da"
+
+#  Error
+message.domainNotAllowed: "Jasotzailearen emailaren domeinua ''{receiverDomain}'' izan behar da"
+
+# Label
+label.cif: "IFK"
+label.dni: "NAN"
+label.sha1: "SHA1"
+label.size: "Tamainia"

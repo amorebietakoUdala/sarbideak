@@ -1,0 +1,4 @@
+message.error: "Akatsa"
+btn.ok: "Onartu"
+
+maxFileSizeExceeded: "Fitxategiaren tamainia luzeegia da ({fileSize}). Gehienez {maxFileSize} izan ahal ditu"
