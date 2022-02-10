@@ -1,11 +1,25 @@
-
-{{ 'message.emailTextReceiver' | trans }}<br>
-{{ 'label.sha1' | trans }}: {{ data['sha1'] }}<br>
-{{ 'upload.file' | trans }}: {{ data['fileName'] }}<br>
-{{ 'label.size' | trans }}: {{ data['size'] }}<br>
-{% if giltzaUser['cif'] != null and giltzaUser['cif'] != 'EMPTY' %}
-   {{ 'label.cif' | trans }}: {{ giltzaUser['cif'] }}<br>
-{% endif %}
-{{ 'label.dni' | trans }}: {{ giltzaUser['dni'] }}<br>
-{{ 'upload.senderEmail' | trans }}: {{ data['senderEmail'] }}<br>
-{{ 'upload.receiverEmail' | trans }}: {{ data['receiverEmail'] }}<br>
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')[0] }}">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+      {{ 'message.emailTextReceiver' | trans | raw }}<br>
+      {{ 'message.downloadURL' | trans }} <a href="{{ app.request.getSchemeAndHttpHost() }}{{ asset('uploads/'~data['sha1']~'/'~data['fileName']) }}">{{ app.request.getSchemeAndHttpHost() }}{{ asset('uploads/'~data['sha1']~'/'~data['fileName']) }}</a><br>
+      <b>{{ 'message.theFileBeDeletedIn15days' | trans }}</b><br>
+      <br>
+      <b>{{ 'label.sha1' | trans }}:</b> {{ data['sha1'] }}<br>
+      <b>{{ 'label.date' | trans }}:</b> {{ date }}<br>
+      <b>{{ 'label.hour' | trans }}:</b> {{ hour }}<br>
+      <b>{{ 'upload.file' | trans }}:</b> {{ data['fileName'] }}<br>
+      <b>{{ 'label.size' | trans }}:</b> {{ data['size'] }}<br>
+      {% if giltzaUser['cif'] != null and giltzaUser['cif'] != 'EMPTY' %}
+         <b>{{ 'label.cif' | trans }}:</b> {{ giltzaUser['cif'] }}<br>
+      {% endif %}
+      <b>{{ 'label.dni' | trans }}:</b> {{ giltzaUser['dni'] }}<br>
+      <b>{{ 'upload.senderEmail' | trans }}:</b> {{ data['senderEmail'] }}<br>
+      <b>{{ 'upload.receiverEmail' | trans }}:</b> {{ data['receiverEmail'] }}<br>
+    </body>
+</html>

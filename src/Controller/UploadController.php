@@ -4,14 +4,15 @@ namespace App\Controller;
 
 use App\DTO\Audit;
 use App\Form\UploadType;
+use DateTime;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -104,6 +105,8 @@ class UploadController extends AbstractController
         $html = $this->renderView($template, [
             'data' => $data,
             'giltzaUser' => $giltzaUser,
+            'date' => (new \DateTime())->format('Y-m-d'),
+            'hour' => (new \DateTime())->format('H:i:s'),
         ]);
         return $html;
     }
@@ -119,27 +122,38 @@ class UploadController extends AbstractController
     }
 
     private function sendEmails($data, $giltzaUser) {
+        $context = [
+            'giltzaUser' => $giltzaUser,
+            'data' => $data,
+            'date' => (new \DateTime())->format('Y-m-d'),
+            'hour' => (new \DateTime())->format('H:i:s'),
+        ];
         if ($this->getParameter('sendMessagesReceiver')) {
-            $html = $this->createEmail($giltzaUser, $data);
+//            $html = $this->createEmail($giltzaUser, $data);
+            $template = 'kutxa/fileReceptionEmailReceiver.html.twig';
             $subject = $this->translator->trans('message.emailSubjectReceiver');
-            $this->sendEmail($data['receiverEmail'], $subject, $html);
+            $this->sendEmail($data['receiverEmail'], $subject, $template, $context);
         }
         if ($this->getParameter('sendMessagesSender')) {
-            $html = $this->createEmail($giltzaUser, $data, false);
+//            $html = $this->createEmail($giltzaUser, $data, false);
+            $template = 'kutxa/fileReceptionEmailSender.html.twig';
             $subject = $this->translator->trans('message.emailSubjectSender');
-            $this->sendEmail($data['receiverEmail'], $subject, $html);
+            $this->sendEmail($data['receiverEmail'], $subject, $template, $context);
         }
     }
 
-    private function sendEmail($to, $subject, $html) {
-        $email = (new Email())
+    private function sendEmail($to, $subject, $template, $context) {
+        $email = (new TemplatedEmail())
             ->from($this->getParameter('mailerFrom'))
             ->to($to)
             ->subject($subject)
-            ->html($html);
-        $addresses = [$this->getParameter('mailerBCC')];
-        foreach ($addresses as $address) {
-            $email->addBcc($address);
+            ->htmlTemplate($template)
+            ->context($context);
+        if ( $this->getParameter('mailerBCC') ) {
+            $addresses = [$this->getParameter('mailerBCC')];
+            foreach ($addresses as $address) {
+                $email->addBcc($address);
+            }
         }
         $this->mailer->send($email);
     }

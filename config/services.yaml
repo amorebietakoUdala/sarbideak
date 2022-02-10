@@ -17,6 +17,7 @@ parameters:
     receiverDomain: '%env(RECEIVER_DOMAIN)%'
     sendMessagesReceiver: '%env(bool:SEND_MESSAGES_TO_RECEIVER)%'
     sendMessagesSender: '%env(bool:SEND_MESSAGES_TO_SENDER)%'
+    sendBCC: '%env(bool:SEND_BCC)%'
 
 services:
     # default configuration for services in *this* file
