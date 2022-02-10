@@ -6,9 +6,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-      {{ 'message.emailTextReceiver' | trans | raw }}<br>
-      {{ 'message.downloadURL' | trans }} <a href="{{ app.request.getSchemeAndHttpHost() }}{{ asset('uploads/'~data['sha1']~'/'~data['fileName']) }}">{{ app.request.getSchemeAndHttpHost() }}{{ asset('uploads/'~data['sha1']~'/'~data['fileName']) }}</a><br>
-      <b>{{ 'message.theFileBeDeletedIn15days' | trans }}</b><br>
+      <p>{{ 'message.emailTextReceiver' | trans | raw }}</p>
+      <p>{{ 'message.downloadURL' | trans }} <a href="{{ app.request.getSchemeAndHttpHost() }}{{ asset('uploads/'~data['sha1']~'/'~data['fileName']) }}">{{ app.request.getSchemeAndHttpHost() }}{{ asset('uploads/'~data['sha1']~'/'~data['fileName']) }}</a></p>
+      <p><b>{{ 'message.theFileBeDeletedIn15days' | trans }}</b></p>
       <br>
       <b>{{ 'label.sha1' | trans }}:</b> {{ data['sha1'] }}<br>
       <b>{{ 'label.date' | trans }}:</b> {{ date }}<br>
