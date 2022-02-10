@@ -16,7 +16,7 @@ message.emailTextReceiver: "Le han enviado un fichero a través de consigna. Los
 message.emailTextSender: |
   Su fichero se ha guardado correctamente en consigna.
   Si desea registrarlo deberá hacer una solicitud a través de sede electrónica indicando el indentificador SHA1 que aparece a continuación.
-message.emailSubjectReceiver: "Se te ha enviado un fitxero a través de consigna"
+message.emailSubjectReceiver: "Se te ha enviado un fichero a través de consigna"
 message.emailSubjectSender: "Su fichero se ha guardado en la consigna"
 
 #  Error
