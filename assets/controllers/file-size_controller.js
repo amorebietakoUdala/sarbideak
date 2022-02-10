@@ -6,7 +6,7 @@ import Translator from 'bazinga-translator';
 const translations = require('../../public/translations/' + Translator.locale + '.json');
 
 export default class extends Controller {
-    static targets = ['file', 'size'];
+    static targets = ['file', 'size', 'submitButton'];
     static values = {
         locale: String,
         maxFileSize: String,
@@ -18,6 +18,7 @@ export default class extends Controller {
         event.preventDefault();
         console.log(event);
         if (this.checkMaxFileSize(event)) {
+            this.submitButtonTarget.toggleAttribute('disabled', true);
             event.currentTarget.submit();
         }
     }
@@ -48,14 +49,11 @@ export default class extends Controller {
 
     formatBytes(bytes, precision = 2) { 
         let units = ['B', 'K', 'M', 'G', 'T']; 
-
         bytes = Math.max(bytes, 0); 
         let pow = Math.floor((bytes ? Math.log(bytes) : 0) / Math.log(1024)); 
         pow = Math.min(pow, units.length - 1); 
+        bytes /= Math.pow(1024, pow);
 
-        // Uncomment one of the following alternatives:
-        //$bytes /= pow(1024, $pow);
-        bytes /= (1 << (10 * pow)); 
         return bytes.toFixed(precision) + ' ' + units[pow]; 
     }
 
@@ -71,8 +69,7 @@ export default class extends Controller {
         }
         let number = maxFileSize.substring(0,index);
         let unit = maxFileSize.substring(index);
-        let units = ['B', 'K', 'M', 'G', 'T']; 
-
+        let units = ['B', 'Ki', 'Mi', 'Gi', 'Ti']; 
         let pow = units.indexOf(unit);
         let bytes = number * Math.pow(1024,pow);
 

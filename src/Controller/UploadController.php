@@ -125,7 +125,7 @@ class UploadController extends AbstractController
         if ($this->getParameter('sendMessagesSender')) {
             $template = 'kutxa/fileReceptionEmailSender.html.twig';
             $subject = $this->translator->trans('message.emailSubjectSender');
-            $this->sendEmail($data['receiverEmail'], $subject, $template, $context);
+            $this->sendEmail($data['senderEmail'], $subject, $template, $context);
         }
     }
 
