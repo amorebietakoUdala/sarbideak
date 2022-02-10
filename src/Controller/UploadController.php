@@ -100,17 +100,6 @@ class UploadController extends AbstractController
         }
     }
 
-    private function createEmail($giltzaUser, $data, $receiver = true) {
-        $template = $receiver ? 'kutxa/fileReceptionEmailReceiver.html.twig': 'kutxa/fileReceptionEmailSender.html.twig';
-        $html = $this->renderView($template, [
-            'data' => $data,
-            'giltzaUser' => $giltzaUser,
-            'date' => (new \DateTime())->format('Y-m-d'),
-            'hour' => (new \DateTime())->format('H:i:s'),
-        ]);
-        return $html;
-    }
-
     private function formatBytes($bytes, $precision = 2) {
         $units = array('B', 'KiB', 'MiB', 'GiB', 'TiB');
         $bytes = max($bytes, 0);
@@ -129,13 +118,11 @@ class UploadController extends AbstractController
             'hour' => (new \DateTime())->format('H:i:s'),
         ];
         if ($this->getParameter('sendMessagesReceiver')) {
-//            $html = $this->createEmail($giltzaUser, $data);
             $template = 'kutxa/fileReceptionEmailReceiver.html.twig';
             $subject = $this->translator->trans('message.emailSubjectReceiver');
             $this->sendEmail($data['receiverEmail'], $subject, $template, $context);
         }
         if ($this->getParameter('sendMessagesSender')) {
-//            $html = $this->createEmail($giltzaUser, $data, false);
             $template = 'kutxa/fileReceptionEmailSender.html.twig';
             $subject = $this->translator->trans('message.emailSubjectSender');
             $this->sendEmail($data['receiverEmail'], $subject, $template, $context);
