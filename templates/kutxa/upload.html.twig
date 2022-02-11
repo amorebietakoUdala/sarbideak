@@ -3,9 +3,8 @@
 {% block title %}{{'title.kutxa.uploadFile' | trans }}{% endblock %}
 
 {% block body %}
-
-<div class="container-fluid">
-   {{ include('kutxa/_form.html.twig') }}
-</div>
-{{ include('common/_alert.html.twig') }}
+   <div class="container-fluid">
+      {{ include('kutxa/_form.html.twig') }}
+   </div>
+   {{ include('common/_alert.html.twig') }}
 {% endblock %}

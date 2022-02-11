@@ -11,9 +11,6 @@
             "config/routes/annotations.yaml"
         ]
     },
-    "doctrine/inflector": {
-        "version": "2.0.4"
-    },
     "doctrine/lexer": {
         "version": "1.2.2"
     },
@@ -34,9 +31,6 @@
     },
     "monolog/monolog": {
         "version": "2.3.5"
-    },
-    "nikic/php-parser": {
-        "version": "v4.13.2"
     },
     "paragonie/random_compat": {
         "version": "v9.99.100"
@@ -103,18 +97,6 @@
     },
     "symfony/css-selector": {
         "version": "v5.4.3"
-    },
-    "symfony/debug-bundle": {
-        "version": "5.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.1",
-            "ref": "0ce7a032d344fb7b661cd25d31914cd703ad445b"
-        },
-        "files": [
-            "config/packages/dev/debug.yaml"
-        ]
     },
     "symfony/dependency-injection": {
         "version": "v5.4.3"
@@ -200,15 +182,6 @@
         "files": [
             "config/packages/mailer.yaml"
         ]
-    },
-    "symfony/maker-bundle": {
-        "version": "1.36",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
-        }
     },
     "symfony/mime": {
         "version": "v5.4.3"
