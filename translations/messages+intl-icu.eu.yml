@@ -1,6 +1,7 @@
 #  Titles 
 title.appTitle: "Kutxa"
 title.kutxa.uploadFile: "Fitxategia igo"
+title.sending: "Bidaltzen"
 
 #  Forms
 upload.file: "Fitxategia"
@@ -20,6 +21,7 @@ message.emailSubjectReceiver: "Kutxa bidez fitxategi bat bidali dizute"
 message.emailSubjectSender: "Fitxategia kutxan gorde egin da"
 message.downloadURL: "Fitxategi bat bidalia Amorebieta-Etxanoko Udalara kutxa aplikazioa bidez "
 message.theFileBeDeletedIn15days: "Jaitsi fitxategia 15 egun baino lehen, epe hori pasatzekotan fitxategia ezabatu egingo bait da"
+message.thisCanTakeSomeTime: "Honek denbora eraman dezake, itxaron mesedez..."
 
 #  Error
 message.domainNotAllowed: "Jasotzailearen emailaren domeinua ''{receiverDomain}'' izan behar da"

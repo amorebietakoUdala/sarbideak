@@ -1,6 +1,7 @@
 #  Titles 
 title.appTitle: "Consigna"
 title.kutxa.uploadFile: "Subir fichero"
+title.sending: "Enviando"
 
 #  Forms
 upload.file: "Fichero"
@@ -20,6 +21,7 @@ message.emailSubjectReceiver: "Se te ha enviado un fichero a través de consigna
 message.emailSubjectSender: "Su fichero se ha guardado en la consigna"
 message.downloadURL: "Fichero enviado al Ayuntamiento de Amorebieta-Etxano a través de la aplicación Kutxa, "
 message.theFileBeDeletedIn15days: "Descargue el fichero antes de 15 días, ya que se borrará pasado ese tiempo"
+message.thisCanTakeSomeTime: "Esto puede tardar unos minutos, espere por favor..."
 
 #  Error
 message.domainNotAllowed: "El email del receptor tiene que ser del dominio ''{receiverDomain}''"

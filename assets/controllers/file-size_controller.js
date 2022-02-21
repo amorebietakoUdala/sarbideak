@@ -2,6 +2,8 @@ import {
     Controller
 } from '@hotwired/stimulus';
 
+//import { useDispatch } from 'stimulus-use';
+
 import Translator from 'bazinga-translator';
 const translations = require('../../public/translations/' + Translator.locale + '.json');
 
@@ -14,11 +16,11 @@ export default class extends Controller {
 
     locale = null;
 
-    submit(event) {
+    async submit(event) {
         event.preventDefault();
-        console.log(event);
         if (this.checkMaxFileSize(event)) {
             this.submitButtonTarget.toggleAttribute('disabled', true);
+            this.dispatch('submitting');
             event.currentTarget.submit();
         }
     }
