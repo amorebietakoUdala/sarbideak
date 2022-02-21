@@ -9,10 +9,6 @@ export default class extends Controller {
    static values = {
    };
 
-   connect() {
-      console.log("Spinner controller");
-   }
-
    showSpinner(event) {
       this.openModal(event);
    }
@@ -22,9 +18,4 @@ export default class extends Controller {
       const modal = new Modal(this.modalTarget);
       modal.show();
   }
-
-//   hideSpinner(event) {
-//    const modal = new Modal(this.modalTarget);
-//    modal.hide();
-//   }
 }
