@@ -38,6 +38,7 @@ class UploadController extends AbstractController
         if ( $request->getSession()->get('giltzaUser') === null ) {
             return $this->redirectToRoute('app_giltza');
         }
+//        dd($request->getSession()->get('giltzaUser'));
         $form = $this->createForm(UploadType::class,null,[
             'maxFileSize' => $this->getParameter('maxFileSize'),
         ]);
@@ -70,6 +71,7 @@ class UploadController extends AbstractController
                 $this->logger->info($audit->__toString());
                 $message = $this->translator->trans('message.fileSaved');
                 $this->addFlash('success', $message);
+                return $this->redirectToRoute('app_kutxa');
             }
         }
 
@@ -117,6 +119,7 @@ class UploadController extends AbstractController
         if ($this->getParameter('sendMessagesReceiver')) {
             $template = 'kutxa/fileReceptionEmailReceiver.html.twig';
             $subject = $this->translator->trans('message.emailSubjectReceiver');
+            $html = $this->renderView('kutxa/fileReceptionEmailReceiver.html.twig', $context);
             $this->sendEmail($data['receiverEmail'], $subject, $template, $context);
         }
         if ($this->getParameter('sendMessagesSender')) {
