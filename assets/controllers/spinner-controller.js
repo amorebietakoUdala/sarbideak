@@ -14,7 +14,6 @@ export default class extends Controller {
    }
 
    openModal(event) {
-      console.log(event);
       const modal = new Modal(this.modalTarget);
       modal.show();
   }
