@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use App\DTO\Audit;
+use App\Entity\Audit;
 use App\Form\UploadType;
 use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,38 +15,50 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UploadController extends AbstractController
 {
  
-    private $mailer;
-    private $translator;
-    private $logger;
+    private MailerInterface $mailer;
+    private TranslatorInterface $translator;
+    private EntityManagerInterface $em;
 
-    public function __construct(MailerInterface $mailer, TranslatorInterface $translator, LoggerInterface $auditLogger) {
+    public function __construct(MailerInterface $mailer, TranslatorInterface $translator, LoggerInterface $auditLogger, EntityManagerInterface $em) {
         $this->mailer = $mailer;
         $this->translator = $translator;
-        $this->logger = $auditLogger;
+        $this->em = $em;
     }
 
     /**
-     * @Route("/{_locale}/upload", name="app_kutxa")
+     * @Route("/{_locale}/erregistro", name="app_erregistro")
      */
-    public function upload(Request $request, SluggerInterface $slugger): Response
+    public function register(Request $request): Response
+    {
+        return $this->forward('App\Controller\UploadController::upload',[
+            'request' => $request,
+            'register' => true,
+        ]);
+    }
+
+    /**
+     * @Route("/{_locale}/igo", name="app_igo")
+     */
+    public function upload(Request $request, $register = false ): Response
     {
         if ( $request->getSession()->get('giltzaUser') === null ) {
             return $this->redirectToRoute('app_giltza');
         }
-//        dd($request->getSession()->get('giltzaUser'));
         $form = $this->createForm(UploadType::class,null,[
             'maxFileSize' => $this->getParameter('maxFileSize'),
+            'register' => $register,
+            'receptionEmail' => $this->getParameter('receptionEmail'),
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Audit $data */
             $data = $form->getData();
-            if ( strpos($data['receiverEmail'], $this->getParameter('receiverDomain')) === false ) {
+            if ( strpos($data->getReceiverEmail(), $this->getParameter('receiverDomain')) === false ) {
                 $message = $this->translator->trans('message.domainNotAllowed', [
                     'receiverDomain' => $this->getParameter('receiverDomain'),
                 ]);
@@ -57,27 +70,28 @@ class UploadController extends AbstractController
             }
             /** @var UploadedFile $file */
             $file = $form->get('file')->getData();
-            $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME).'.'.$file->getClientOriginalExtension();
-            $sha1 = sha1_file($file); 
-            $size = $file->getSize(); 
-            $data['sha1'] = $sha1;
-            $data['size'] = $this->formatBytes($size);
-            $data['fileName'] = $fileName;
+            $data->setFileData($file);
             $error = $this->moveUploadedFile($file);
             if (!$error) {
                 $giltzaUser = $request->getSession()->get('giltzaUser');
-                $this->sendEmails($data, $giltzaUser);
-                $audit = new Audit($giltzaUser['cif'],$giltzaUser['dni'],$fileName,$sha1,$size,$data['senderEmail'],$data['receiverEmail']);
-                $this->logger->info($audit->__toString());
+                $data->fill($giltzaUser);
+                $data->setCreatedAt(new \DateTime());
+                $this->sendEmails($data);
+                $this->em->persist($data);
+                $this->em->flush();
                 $message = $this->translator->trans('message.fileSaved');
                 $this->addFlash('success', $message);
-                return $this->redirectToRoute('app_kutxa');
+                if (!$register) {
+                    return $this->redirectToRoute('app_igo');
+                }
+                return $this->redirectToRoute('app_erregistro');
             }
         }
 
         return $this->render('kutxa/upload.html.twig',[
             'form' => $form->createView(),
             'maxFileSize' => $this->getParameter('maxFileSize'),
+            'register' => $register,
         ]);
     }
 
@@ -99,33 +113,21 @@ class UploadController extends AbstractController
         }
     }
 
-    private function formatBytes($bytes, $precision = 2) {
-        $units = array('B', 'KiB', 'MiB', 'GiB', 'TiB');
-        $bytes = max($bytes, 0);
-        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
-        $pow = min($pow, count($units) - 1);
-        $bytes /= pow(1024, $pow);
-
-        return round($bytes, $precision) . ' ' . $units[$pow];
-    }
-
-    private function sendEmails($data, $giltzaUser) {
+    private function sendEmails(Audit $data) {
         $context = [
-            'giltzaUser' => $giltzaUser,
             'data' => $data,
-            'date' => (new \DateTime())->format('Y-m-d'),
-            'hour' => (new \DateTime())->format('H:i:s'),
         ];
         if ($this->getParameter('sendMessagesReceiver')) {
             $template = 'kutxa/fileReceptionEmailReceiver.html.twig';
             $subject = $this->translator->trans('message.emailSubjectReceiver');
-            $html = $this->renderView('kutxa/fileReceptionEmailReceiver.html.twig', $context);
-            $this->sendEmail($data['receiverEmail'], $subject, $template, $context);
+//            $html = $this->renderView('kutxa/fileReceptionEmailReceiver.html.twig', $context);
+            $this->sendEmail($data->getReceiverEmail(), $subject, $template, $context);
         }
         if ($this->getParameter('sendMessagesSender')) {
             $template = 'kutxa/fileReceptionEmailSender.html.twig';
             $subject = $this->translator->trans('message.emailSubjectSender');
-            $this->sendEmail($data['senderEmail'], $subject, $template, $context);
+//            $html = $this->renderView('kutxa/fileReceptionEmailSender.html.twig', $context);            
+            $this->sendEmail($data->getSenderEmail(), $subject, $template, $context);
         }
     }
 
@@ -149,7 +151,6 @@ class UploadController extends AbstractController
         if (!file_exists($dir)) {
             return true;
         }
-    
         if (!is_dir($dir)) {
             return unlink($dir);
         }
@@ -158,14 +159,14 @@ class UploadController extends AbstractController
             if ($item == '.' || $item == '..') {
                 continue;
             }
-    
             if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
                 return false;
             }
-    
         }
     
         return rmdir($dir);
     }
+
+
 
 }

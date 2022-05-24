@@ -7,6 +7,7 @@ title.sending: "Enviando"
 upload.file: "Fichero"
 upload.senderEmail: "Email del emisor"
 upload.receiverEmail: "Email del receptor"
+upload.registrationNumber: "Número de registro"
 
 #  Buttons
 btn.send: "Enviar"

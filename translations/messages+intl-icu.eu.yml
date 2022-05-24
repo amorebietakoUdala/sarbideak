@@ -7,6 +7,7 @@ title.sending: "Bidaltzen"
 upload.file: "Fitxategia"
 upload.senderEmail: "Bidaltzailearen emaila"
 upload.receiverEmail: "Jasotzailearen emaila"
+upload.registrationNumber: "Erregistro zenbakia"
 
 #  Buttons
 btn.send: "Bidali"

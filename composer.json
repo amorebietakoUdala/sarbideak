@@ -8,6 +8,9 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/annotations": "^1.13",
+        "doctrine/doctrine-bundle": "^2.6",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/orm": "^2.12",
         "league/oauth2-client": "^2.6",
         "symfony/apache-pack": "^1.0",
         "symfony/console": "5.4.*",
@@ -19,9 +22,9 @@
         "symfony/mailer": "5.4.*",
         "symfony/mime": "5.4.*",
         "symfony/monolog-bundle": "^3.7",
+        "symfony/proxy-manager-bridge": "5.4.*",
         "symfony/runtime": "5.4.*",
         "symfony/security-bundle": "5.4.*",
-        "symfony/serializer": "5.4.*",
         "symfony/translation": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/validator": "5.4.*",
@@ -79,6 +82,7 @@
         }
     },
     "require-dev": {
+        "symfony/maker-bundle": "^1.43",
         "symfony/stopwatch": "5.4.*",
         "symfony/web-profiler-bundle": "5.4.*",
         "willdurand/js-translation-bundle": "^5.0"

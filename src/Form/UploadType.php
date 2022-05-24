@@ -2,9 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Audit;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,6 +17,8 @@ class UploadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $maxFileSize = $options['maxFileSize'];
+        $register = $options['register'];
+        $receptionEmail = $options['receptionEmail'];
         $builder
             ->add('file', FileType::class, [
                  'label' => 'upload.file',
@@ -33,20 +37,38 @@ class UploadType extends AbstractType
                 'constraints' => [
                     new Email()
                 ]
-            ])
-            ->add('receiverEmail', EmailType::class, [
-                'label' => 'upload.receiverEmail',
-                'constraints' => [
-                    new Email()
-                ]
-            ])
+                ]);
+            if ( $register) {
+                $builder->add('receiverEmail', HiddenType::class, [
+                    'label' => 'upload.receiverEmail',
+                    'constraints' => [
+                        new Email()
+                    ],
+                    'data' => $receptionEmail,
+                ]);
+            } else {
+                $builder->add('receiverEmail', EmailType::class, [
+                    'label' => 'upload.receiverEmail',
+                    'constraints' => [
+                        new Email()
+                    ]
+                ]);
+            }
+            if ($register) {
+                $builder->add('registrationNumber', null, [
+                    'label' => 'upload.registrationNumber',
+                ]);
+            }
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'maxFileSize' => '500M'
+            'data_class' => Audit::class,
+            'maxFileSize' => '500M',
+            'register' => false,
+            'receptionEmail' => null,
         ]);
     }
 }

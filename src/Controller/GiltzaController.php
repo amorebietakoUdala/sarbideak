@@ -78,7 +78,7 @@ class GiltzaController extends AbstractController
                         "giltzaUser",
                         $response
                     );
-                    return $this->redirectToRoute('app_kutxa');
+                    return $this->redirectToRoute('app_igo');
                 } else {
                     return $this->redirectToRoute('app_giltza');
                 }
