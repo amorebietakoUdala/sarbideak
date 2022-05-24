@@ -15,9 +15,7 @@ btn.send: "Enviar"
 #  Messages
 message.fileSaved: "El fichero se ha guardado correctamente"
 message.emailTextReceiver: "Le han enviado un fichero a través de consigna. Los datos del envío son los siguientes:"
-message.emailTextSender: |
-  <p>El fichero de gran tamaño enviado al Ayuntamiento de Amorebieta-Etxano ha llegado correctamente.</p>
-  <p>Si necesitas un registro oficial, realiza el trámite 'Procedimeintos generales - Instancia General' en la sede electrónica, <a href="https://e-udala.amorebieta-etxano.eus">https://e-udala.amorebieta-etxano.eus</a>, dando los siguientes datos:</p>
+message.emailTextSender: "<p>El fichero de gran tamaño enviado al Ayuntamiento de Amorebieta-Etxano ha llegado correctamente.</p>"
 message.emailSubjectReceiver: "Se te ha enviado un fichero a través de consigna"
 message.emailSubjectSender: "Su fichero se ha guardado en la consigna"
 message.downloadURL: "Fichero enviado al Ayuntamiento de Amorebieta-Etxano a través de la aplicación Kutxa, "

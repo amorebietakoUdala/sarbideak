@@ -22,11 +22,11 @@
          <div class="col-lg-3">
             {{ form_row(form.senderEmail) }}
          </div>
-         <div class="col-lg-3">
+         <div class="{{ register ? 'col-lg-auto' : 'col-lg-3'}}">
             {{ form_row(form.receiverEmail) }}
          </div>
          <div class="col-auto">
-            <button class="btn btn-primary" data-file-size-target="submitButton">{{ button_label|default('btn.send'|trans) }}</button>
+            <button class="btn btn-primary" data-file-size-target="submitButton">{{ 'btn.send' | trans }}</button>
          </div>
    {{ form_end(form) }}
 </div>
