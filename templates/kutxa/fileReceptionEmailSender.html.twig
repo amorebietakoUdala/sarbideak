@@ -8,6 +8,9 @@
     </head>
    <body>
       {{ 'message.emailTextSender' | trans | raw }}
+      {% if data.registrationNumber != null %}
+         {{ 'message.emailTextSenderRow2' | trans({'{registrationNumber}': data.registrationNumber}) | raw }}
+      {% endif %}
       <b>{{ 'label.sha1' | trans }}:</b> {{ data.sha1 }}<br>
       <b>{{ 'label.date' | trans }}:</b> {{ data.createdAt | date('Y-m-d') }}<br>
       <b>{{ 'label.hour' | trans }}:</b> {{ data.createdAt | date('H:i:s') }}<br>
