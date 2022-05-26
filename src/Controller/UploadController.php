@@ -46,8 +46,14 @@ class UploadController extends AbstractController
      */
     public function upload(Request $request, $register = false ): Response
     {
+        $routeName = 'app_igo';
+        if ($register) {
+            $routeName = 'app_erregistro';
+        }
         if ( $request->getSession()->get('giltzaUser') === null ) {
-            return $this->redirectToRoute('app_giltza');
+            return $this->redirectToRoute('app_giltza', [
+                'destination' => $routeName,
+            ]);
         }
         $form = $this->createForm(UploadType::class,null,[
             'maxFileSize' => $this->getParameter('maxFileSize'),
@@ -81,10 +87,7 @@ class UploadController extends AbstractController
                 $this->em->flush();
                 $message = $this->translator->trans('message.fileSaved');
                 $this->addFlash('success', $message);
-                if (!$register) {
-                    return $this->redirectToRoute('app_igo');
-                }
-                return $this->redirectToRoute('app_erregistro');
+                return $this->redirectToRoute($routeName);
             }
         }
 
@@ -111,6 +114,7 @@ class UploadController extends AbstractController
                 $this->addFlash('error', $e->getMessage());
             }
         }
+        return $error;
     }
 
     private function sendEmails(Audit $data) {
