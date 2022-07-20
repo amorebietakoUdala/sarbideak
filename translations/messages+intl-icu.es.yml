@@ -8,6 +8,7 @@ upload.file: "Fichero"
 upload.senderEmail: "Email del emisor"
 upload.receiverEmail: "Email del receptor"
 upload.registrationNumber: "Número de registro"
+upload.registrationNumber.help: "El formato del número de registro es <nº>/<año>"
 
 #  Buttons
 btn.send: "Enviar"

@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\AuditRepository;
+use App\Validator\RegistrationNumber;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass=AuditRepository::class)

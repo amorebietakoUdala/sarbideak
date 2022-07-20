@@ -12,35 +12,47 @@ export default class extends Controller {
     static values = {
         locale: String,
         maxFileSize: String,
+        minFileSize: String,
     };
 
     locale = null;
 
     async submit(event) {
         event.preventDefault();
-        if (this.checkMaxFileSize(event)) {
+        if (this.checkFileSize(event)) {
             this.submitButtonTarget.toggleAttribute('disabled', true);
             this.dispatch('submitting');
             event.currentTarget.submit();
         }
     }
 
-    checkMaxFileSize(event) {
+    checkFileSize(event) {
         event.preventDefault();
-        const maxBytes = this.calculateMaxSizeInBytes(this.maxFileSizeValue);
+        const maxBytes = this.calculateSizeInBytes(this.maxFileSizeValue);
+        const minBytes = this.calculateSizeInBytes(this.minFileSizeValue);
         const fsize = this.fileTarget.files[0].size;
         this.sizeTarget.innerHTML = this.formatBytes(fsize);
-        if (fsize > maxBytes) {
+        if (fsize > maxBytes || fsize < minBytes ) {
+            Translator.fromJSON(translations);
+            Translator.locale = this.localeValue;
+            let message = null;
+            if ( fsize > maxBytes ) {
+                message = Translator.trans('maxFileSizeExceeded', {
+                    'fileSize' : this.formatBytes(fsize),
+                    'maxFileSize' : this.maxFileSizeValue,
+                },'alerts');
+            }
+            if ( fsize < minBytes ) {
+                message = Translator.trans('minFileSizeExceeded', {
+                    'fileSize' : this.formatBytes(fsize),
+                    'minFileSize' : this.minFileSizeValue,
+                },'alerts');
+            }
             import ('sweetalert2')
                 .then( async (Swal) => {
-                    Translator.fromJSON(translations);
-                    Translator.locale = this.localeValue;
                     Swal.default.fire({
                         template: '#error',
-                        html: Translator.trans('maxFileSizeExceeded', {
-                            'fileSize' : this.formatBytes(fsize),
-                            'maxFileSize' : this.maxFileSizeValue,
-                        },'alerts'),
+                        html: message,
                     })
                 })
                 .catch( error => console.error(error) )
@@ -59,7 +71,7 @@ export default class extends Controller {
         return bytes.toFixed(precision) + ' ' + units[pow]; 
     }
 
-    calculateMaxSizeInBytes(maxFileSize) {
+    calculateSizeInBytes(maxFileSize) {
         let index = 0;
         let parsed = 0;
         for (let i=0; i < maxFileSize.length ; i++ ) {

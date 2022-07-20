@@ -23,11 +23,13 @@ class UploadController extends AbstractController
     private MailerInterface $mailer;
     private TranslatorInterface $translator;
     private EntityManagerInterface $em;
+    private string $downloadUri;
 
-    public function __construct(MailerInterface $mailer, TranslatorInterface $translator, LoggerInterface $auditLogger, EntityManagerInterface $em) {
+    public function __construct(MailerInterface $mailer, TranslatorInterface $translator, LoggerInterface $auditLogger, EntityManagerInterface $em, string $downloadUri = '/uploads') {
         $this->mailer = $mailer;
         $this->translator = $translator;
         $this->em = $em;
+        $this->downloadUri = $downloadUri;
     }
 
     /**
@@ -57,6 +59,7 @@ class UploadController extends AbstractController
         }
         $form = $this->createForm(UploadType::class,null,[
             'maxFileSize' => $this->getParameter('maxFileSize'),
+            'minFileSize' => $this->getParameter('minFileSize'),
             'register' => $register,
             'receptionEmail' => $this->getParameter('receptionEmail'),
         ]);
@@ -72,12 +75,13 @@ class UploadController extends AbstractController
                 return $this->render('kutxa/upload.html.twig',[
                     'form' => $form->createView(),
                     'maxFileSize' => $this->getParameter('maxFileSize'),
+                    'minFileSize' => $this->getParameter('minFileSize'),
                 ]);                
             }
             /** @var UploadedFile $file */
             $file = $form->get('file')->getData();
             $data->setFileData($file);
-            $error = $this->moveUploadedFile($file);
+            $error = $this->moveUploadedFile($file, $data->getRegistrationNumber());
             if (!$error) {
                 $giltzaUser = $request->getSession()->get('giltzaUser');
                 $data->fill($giltzaUser);
@@ -94,19 +98,19 @@ class UploadController extends AbstractController
         return $this->render('kutxa/upload.html.twig',[
             'form' => $form->createView(),
             'maxFileSize' => $this->getParameter('maxFileSize'),
+            'minFileSize' => $this->getParameter('minFileSize'),
             'register' => $register,
         ]);
     }
 
-    private function moveUploadedFile(UploadedFile $file) {
+    private function moveUploadedFile(UploadedFile $file, $directory = null) {
         $error = false;
         if ($file) {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $newFilename = $originalFilename.'.'.$file->getClientOriginalExtension();
-
             try {
                 $sha1 = sha1_file($file);
-                $finalDir = $this->getParameter('uploadDir').'/'.$sha1;
+                $finalDir = $this->createDirectories($sha1, $directory);
                 file_exists($finalDir) ? $this->deleteDirectory($finalDir) : mkdir($finalDir);
                 $file->move($finalDir,$newFilename);
             } catch (FileException $e) {
@@ -117,9 +121,30 @@ class UploadController extends AbstractController
         return $error;
     }
 
+    private function createDirectories($sha1, $directory = null) {
+        $year = date('Y');
+        $baseDir = $this->getParameter('uploadDir').'/'.$year;
+        if ( !file_exists($baseDir) ) {
+            mkdir($baseDir);
+        }
+        if ( null !== $directory ) {
+            $fixedDirectory = str_replace('/','-', $directory);
+            $registrationRootDir = $baseDir.'/'.$fixedDirectory;
+            if ( file_exists($registrationRootDir) ) {
+                $this->deleteDirectory($registrationRootDir);
+            }
+            mkdir($registrationRootDir);
+            $finalDir = $registrationRootDir.'/'.$sha1;
+        } else {
+            $finalDir = $baseDir.'/'.$sha1;
+        }
+        return $finalDir;
+    }
+
     private function sendEmails(Audit $data) {
         $context = [
             'data' => $data,
+            'downloadUri' => $this->downloadUri,
         ];
         if ($this->getParameter('sendMessagesReceiver')) {
             $template = 'kutxa/fileReceptionEmailReceiver.html.twig';
