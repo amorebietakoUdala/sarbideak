@@ -145,6 +145,7 @@ class UploadController extends AbstractController
         $context = [
             'data' => $data,
             'downloadUri' => $this->downloadUri,
+            'year' => date('Y'),
         ];
         if ($this->getParameter('sendMessagesReceiver')) {
             $template = 'kutxa/fileReceptionEmailReceiver.html.twig';

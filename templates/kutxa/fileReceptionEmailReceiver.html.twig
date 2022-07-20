@@ -8,7 +8,7 @@
     </head>
     <body>
       <p>{{ 'message.emailTextReceiver' | trans | raw }}</p>
-      <p>{{ 'message.downloadURL' | trans }} <a href="{{ app.request.getSchemeAndHttpHost() }}{{ asset(downloadUri~'/'~data.sha1~'/'~data.file) }}">{{ app.request.getSchemeAndHttpHost() }}{{ asset(downloadUri~'/'~data.sha1~'/'~data.file) }}</a></p>
+      <p>{{ 'message.downloadURL' | trans }} <a href="{{ app.request.getSchemeAndHttpHost() }}{{ asset(downloadUri~'/'~year~'/'~data.sha1~'/'~data.file) }}">{{ app.request.getSchemeAndHttpHost() }}{{ asset(downloadUri~'/'~year~'/'~data.sha1~'/'~data.file) }}</a></p>
       <p><b>{{ 'message.theFileBeDeletedIn15days' | trans }}</b></p>
       <br>
       <b>{{ 'label.sha1' | trans }}:</b> {{ data.sha1 }}<br>
