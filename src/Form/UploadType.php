@@ -22,7 +22,6 @@ class UploadType extends AbstractType
     {
         $maxFileSize = $options['maxFileSize'];
         $minFileSize = $options['minFileSize'];
-        $register = $options['register'];
         $receptionEmail = $options['receptionEmail'];
         $builder
             ->add('file', FileType::class, [
@@ -44,34 +43,23 @@ class UploadType extends AbstractType
                 'constraints' => [
                     new Email()
                 ]
-                ]);
-            if ( $register) {
-                $builder->add('receiverEmail', HiddenType::class, [
-                    'label' => 'upload.receiverEmail',
-                    'constraints' => [
-                        new Email()
-                    ],
-                    'data' => $receptionEmail,
-                ]);
-            } else {
-                $builder->add('receiverEmail', EmailType::class, [
-                    'label' => 'upload.receiverEmail',
-                    'constraints' => [
-                        new Email()
-                    ]
-                ]);
-            }
-            if ($register) {
-                $builder->add('registrationNumber', null, [
-                    'label' => 'upload.registrationNumber',
-                    'help' => new TranslatableMessage('upload.registrationNumber.help'),
-                    'required' => true,
-                    'constraints' => [
-                        new NotBlank(),
-                        new RegistrationNumber(),
-                    ]
-                ]);
-            }
+                ])
+            ->add('receiverEmail', HiddenType::class, [
+                'label' => 'upload.receiverEmail',
+                'constraints' => [
+                    new Email()
+                ],
+                'data' => $receptionEmail,
+            ])
+            ->add('registrationNumber', null, [
+                'label' => 'upload.registrationNumber',
+                'help' => new TranslatableMessage('upload.registrationNumber.help'),
+                'required' => true,
+                'constraints' => [
+                    new NotBlank(),
+                    new RegistrationNumber(),
+                ]
+            ]);
         ;
     }
 
@@ -81,7 +69,6 @@ class UploadType extends AbstractType
             'data_class' => Audit::class,
             'maxFileSize' => '500M',
             'minFileSize' => '50Mi',
-            'register' => false,
             'receptionEmail' => null,
         ]);
     }

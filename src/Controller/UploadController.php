@@ -33,34 +33,16 @@ class UploadController extends AbstractController
     }
 
     /**
-     * @Route("/{_locale}/erregistro", name="app_erregistro")
+     * @Route("/{_locale}/erregistro", name="app_register")
      */
-    public function register(Request $request): Response
+    public function upload(Request $request): Response
     {
-        return $this->forward('App\Controller\UploadController::upload',[
-            'request' => $request,
-            'register' => true,
-        ]);
-    }
-
-    /**
-     * @Route("/{_locale}/igo", name="app_igo")
-     */
-    public function upload(Request $request, $register = false ): Response
-    {
-        $routeName = 'app_igo';
-        if ($register) {
-            $routeName = 'app_erregistro';
-        }
         if ( $request->getSession()->get('giltzaUser') === null ) {
-            return $this->redirectToRoute('app_giltza', [
-                'destination' => $routeName,
-            ]);
+            return $this->redirectToRoute('app_giltza');
         }
         $form = $this->createForm(UploadType::class,null,[
             'maxFileSize' => $this->getParameter('maxFileSize'),
             'minFileSize' => $this->getParameter('minFileSize'),
-            'register' => $register,
             'receptionEmail' => $this->getParameter('receptionEmail'),
         ]);
         $form->handleRequest($request);
@@ -91,7 +73,7 @@ class UploadController extends AbstractController
                 $this->em->flush();
                 $message = $this->translator->trans('message.fileSaved');
                 $this->addFlash('success', $message);
-                return $this->redirectToRoute($routeName);
+                return $this->redirectToRoute('app_register');
             }
         }
 
@@ -99,7 +81,6 @@ class UploadController extends AbstractController
             'form' => $form->createView(),
             'maxFileSize' => $this->getParameter('maxFileSize'),
             'minFileSize' => $this->getParameter('minFileSize'),
-            'register' => $register,
         ]);
     }
 

@@ -5,11 +5,9 @@
    }) }}>
    {{ form_start(form, { 'attr': {'data-action': 'file-size#submit'} }) }}
       <div class="row align-items-center">
-         {% if register %}
-            <div class="col-auto">
-                  {{ form_row(form.registrationNumber) }}
-            </div>
-         {% endif %}
+         <div class="col-auto">
+               {{ form_row(form.registrationNumber) }}
+         </div>
          <div class="col-auto">
             {{ form_row(form.file, {'attr' : { 
                'data-file-size-target' : 'file', 
@@ -23,7 +21,7 @@
          <div class="col-lg-3">
             {{ form_row(form.senderEmail) }}
          </div>
-         <div class="{{ register ? 'col-lg-auto' : 'col-lg-3'}}">
+         <div class="col-lg-auto">
             {{ form_row(form.receiverEmail) }}
          </div>
          <div class="col-auto">
