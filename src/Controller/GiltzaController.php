@@ -41,10 +41,6 @@ class GiltzaController extends AbstractController
      */
     public function giltza(string $_locale = 'es', Request $request): Response
     {
-        $destination = $request->get('destination');
-        if ( null !== $destination ) {
-            $request->getSession()->set('destination', $destination);
-        }
         // If we don't have an authorization code then get one
         if (!isset($_GET['code'])) {
             $this->options = [
@@ -82,11 +78,7 @@ class GiltzaController extends AbstractController
                         "giltzaUser",
                         $response
                     );
-                    $destination = $request->getSession()->get('destination');
-                    if ( null !== $destination ) {
-                        return $this->redirectToRoute($destination);
-                    }
-                    return $this->redirectToRoute('app_igo');
+                    return $this->redirectToRoute('app_register');
                 } else {
                     return $this->redirectToRoute('app_giltza');
                 }
