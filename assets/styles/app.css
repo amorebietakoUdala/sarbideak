@@ -1,8 +1,5 @@
-body {
-    padding: 0.1em 0.1em 0.1em 0.1em;
-    line-height: 1;
-    margin-bottom: 2.5rem;
-}
+@import '~bootstrap/dist/css/bootstrap.css';
+@import "~@fortawesome/fontawesome-free/css/all.css";
 
 header {
     display: grid;
@@ -14,6 +11,7 @@ header {
 }
 
 main {
+	font-size: 0.9rem;
     width: 100vw;
 }
 
@@ -33,18 +31,38 @@ main {
     border-radius: 3rem;
 }
 
-.fill {
-    max-width: -moz-available;
-    max-width: -webkit-fill-available;
+body {
+    background-color: white;
 }
 
-@media (max-width: 767px) {
-    .logo {
-        height: 50px;
-        width: auto;
-    }
+.btn-rounded {
+    border-radius: 1.1rem 1.1rem 1.1rem 1.1rem;
+}
 
-    h1 {
-        font-size: 1.5rem;
-    }
+.fixed-bottom-right {
+    position: fixed;
+    right: 20px;
+    bottom: 50px;
+}
+
+span.text-danger ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+span.text-danger ul li {
+	font-size: 0.8rem;
+}
+
+.modal-body button {
+    display: none;
+}
+
+.modal-body #modal-cancel-button {
+    display: none;
+}
+
+table a {
+    text-decoration: none;
 }

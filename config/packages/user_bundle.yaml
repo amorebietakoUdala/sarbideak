@@ -1,0 +1,10 @@
+user:
+    class: 'App\Entity\User'
+#    form_type: 'App\Form\UserType'
+    allowedRoles: ["ROLE_SALTO", "ROLE_ADMIN"]
+    domain: '%env(LDAP_ACCOUNTDOMAINNAME)%'
+    #internet_domain: '%env(LDAP_INTERNET_DOMAIN)%'
+    ldap_users_dn: '%env(LDAP_USERS_DN)%'
+    ldap_users_filter: '(&(objectclass=Person)(%env(LDAP_USERS_UUID)%={username}))'
+    ldap_users_uuid: '%env(LDAP_USERS_UUID)%'
+    successPath: app_home

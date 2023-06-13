@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark mb-1">
+  <a class="navbar-brand" href="#">&nbsp;</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+			<li class="nav-item">
+				<a class="nav-link {{ ( app.request.attributes.get('_route') == 'lock_index' ) ? 'active': '' }}" href="{{ path('lock_index') }}" id="navbarLocks" aria-haspopup="true" aria-expanded="false">
+					{{ 'navitem.locks' | trans | capitalize }}
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link {{ ( app.request.attributes.get('_route') == 'audit_index' ) ? 'active': '' }}" href="{{ path('audit_index') }}" id="navbarAudits" aria-haspopup="true" aria-expanded="false">
+					{{ 'navitem.audits' | trans | capitalize }}
+				</a>
+			</li>
+    </ul>
+  </div>
+
+</nav>
+		
+

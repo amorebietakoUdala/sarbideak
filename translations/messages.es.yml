@@ -1,0 +1,69 @@
+messages.appTitle: "Salto"
+
+app.title.lock.index: "Cerraduras"
+
+navitem.administration: "Administración"
+navitem.users: "Usuarios"
+navitem.locks: "Cerraduras"
+navitem.audits: "Auditoria"
+
+link.logout: "Salir"
+
+security.login.username: "Nombre de usuario"
+security.login.password: "Password"
+security.login.remember_me: "Recordarme"
+security.login.submit: "Entrar"
+security.login.invalid_credentials: 'El usuario y contraseña no son correctos'
+security.login.system_error: 'Debido a un error del sistema, no se puede comprobar el usuario'
+security.login.remember_password: 'Se te ha olvidado la contraseña?'
+security.password:
+security.resetted: 'La contraseña se ha cambiado'
+btn.loginera.itzuli: 'Volver a la página de login'
+'Credenciales no válidas.': 'Credenciales no válidas.'
+
+user.id: "Id"
+user.username: "Nombre de usuario"
+user.firstName: "Nombre"
+user.roles: "Roles"
+user.email: "Email"
+user.new_password: "Nueva contraseña"
+user.repeat_new_password: "Repetir nueva contraseña"
+
+lock.floor: "Piso"
+lock.description: "Description"
+
+audit.id: "Id"
+audit.user: "Usuario"
+audit.lockDescription: "Cerradura"
+audit.result: "Resultado"
+
+btn.cancel: "Volver"
+btn.unlock: "Abrir"
+btn.save: "Guardar"
+btn.new: "Nuevo"
+btn.search: "Buscar"
+btn.show: "Ver"
+btn.edit: "Editar"
+btn.delete: "Borrar"
+btn.clean: "Limpiar"
+btn.yes: "Sí"
+btn.no: "No"
+
+messages.confirmacion: "Confirmación"
+messages.successfullyUnlocked: "La cerradura se ha abierto correctamente"
+messages.confirmationDetail: "¿Esta seguro de que desea eliminar el registro?"
+messages.results0: "No se han encontrado resultados"
+messages.si: "Sí"
+messages.no: "No"
+messages.userSaved: "El usuario se ha guardado correctamente"
+messages.userDeleted: "El usuario se ha eliminado correctamente"
+messages.existingUser: "El nombre de usuario o el email ya existe"
+
+label.yes: "Sí"
+label.no: "No"
+label.choose: "Seleccione una opción"
+
+ROLE_SALTO: "Usuario"
+ROLE_ADMIN: "Administrador"
+
+table.options: "Opciones"

@@ -1,5 +1,6 @@
+message.confirmationTitle: "Konfirma ezazu mesedez"
+message.deletionConfirmationText: "Ziur zaude erregistro hau ezabatu nahi duzula?"
 message.error: "Akatsa"
+btn.accept: "Bai"
 btn.ok: "Onartu"
-
-maxFileSizeExceeded: "Fitxategiaren tamainia luzeegia da ({fileSize}). Gehienez {maxFileSize} izan ahal ditu"
-minFileSizeExceeded: "Fitxategiaren tamainia txikiegia da ({fileSize}). Minimoa {minFileSize} dira"
+btn.cancel: "Utzi"

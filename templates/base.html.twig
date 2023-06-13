@@ -2,25 +2,27 @@
 <html lang="{{ app.request.locale|split('_')[0] }}">
     <head>
         <meta charset="UTF-8">
-        <link rel="icon" href="{{ asset('build/images/favicon.ico') }}">
-        <title>{% block title %}{{ 'title.appTitle' | trans }}{% endblock %}</title>
+        <title>{% block title %}{{ 'messages.appTitle' | trans }}{% endblock %}</title>
+        <link rel="shortcut icon" href="{{ asset('build/images/favicon.ico') }}">
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+				{{ encore_entry_link_tags('app') }}
+			{% endblock %}
     </head>
     <body>
-      {% block header %}
-		{{ include('common/header.html.twig') }}
-	  {% endblock header %}
+		
+		{% block header %}
+			{{ include('common/_header.html.twig') }}
+		{% endblock header %}
+		{% block menu %}
+			{{ include('common/_menu.html.twig') }}
+		{% endblock %}
+		{% block message %}
+			{{ include('common/_messages.html.twig') }}
+		{% endblock message %}
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
 
-	  {% block message %}
-         {{ include('common/_messages.html.twig') }}
-      {% endblock message %}
-
-      {% block body %}{% endblock %}
     </body>
 </html>

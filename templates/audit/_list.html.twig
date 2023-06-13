@@ -1,0 +1,43 @@
+{% if audits is defined and audits|length > 0 %}
+<div>
+   <table class="table"
+      data-toggle="table"
+      data-table-target="table"
+      data-page-number="{{ page }}" 
+      data-page-size="{{ pageSize }}"
+      data-page-sortName="{{ sortName }}"
+      data-page-sortOrder="{{ sortOrder }}">
+      <thead>
+         <tr>
+            <th data-sortable="true">{{ 'audit.id' | trans }}</th>
+            <th data-sortable="true">{{ 'audit.user' | trans }}</th>
+            <th data-sortable="true">{{ 'audit.lockDescription' | trans }}</th>
+            <th data-sortable="true">{{ 'audit.result' | trans }}</th>
+            {# <th data-sortable="true" data-field="options">{{"table.options" | trans }}</th> #}
+         </tr>
+      </thead>
+      <tbody>
+         {% for audit in audits %}
+            <tr>
+               <td>{{ audit.id }}</td>
+               <td>{{ audit.user.username }}</td>
+               <td>{{ audit.lockDescription }}</td>
+               <td>{{ audit.result }}</td>
+               {# <td>
+                  <a href="{{ path('lock_unlock', {'lockId': lock.id}) }}" data-action="click->table#onClick" data-pagination="false"><i class="fa fa-unlock" title='{{ "btn.unlock" | trans | capitalize }}'></i></a>&nbsp;
+               </td> #}
+            </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+</div>
+{% else %}
+   <div class="alert alert-secondary mt-3" role="alert">{{"messages.results0" | trans }}</div>
+{% endif %}
+{# <span class="pull-right">
+   <a href="{{ path('owner_new') }}" class="btn btn-primary rounded-circle fixed-bottom-right z-index-100">
+      <i class="fa fa-plus" title='{{ "btn.new" | trans | capitalize }}'></i>
+   </a>
+</span> #}
+{{ include('common/_alert.html.twig') }}
+</div>

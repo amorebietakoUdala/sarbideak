@@ -1,3 +1,4 @@
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -7,15 +8,13 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-
+/nbproject/private/
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
-/public/uploads/
-/public/translations/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
-
 /.yarn/
-/.pnp.*
+.env.local.*
+composer.json.*

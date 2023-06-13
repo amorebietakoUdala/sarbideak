@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'user_bundle' %}
+
+{% block menu %}{% endblock %}
+
+{% block message %}
+    {{ include('common/_messages.html.twig', {
+        'domain' : 'user_bundle',
+    }) }}
+{% endblock message %}
+
+{% block body %}
+    {% block user_content %}{% endblock %}
+{% endblock %}

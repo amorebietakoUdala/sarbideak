@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../bundles/user-bundle"
+		},
+		{
+			"path": "../../bundles/stimulus-controller-bundle"
+		}
+	],
+	"settings": {}
+}
