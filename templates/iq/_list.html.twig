@@ -1,0 +1,57 @@
+{% if iqs is defined and iqs|length > 0 %}
+   <div>
+      <table class="table"
+         data-toggle="table"
+         data-table-target="table"
+         data-page-number="{{ page }}" 
+         data-page-size="{{ pageSize }}"
+         data-page-sortName="{{ sortName }}"
+         data-page-sortOrder="{{ sortOrder }}">
+         <thead>
+            <tr>
+               <th data-sortable="true">{{ 'iq.id' | trans }}</th>
+               <th data-sortable="true">{{ 'iq.description' | trans }}</th>
+               <th data-sortable="true">{{ 'iq.resetDate' | trans }}</th>
+               <th data-sortable="true" data-field="options">{{"table.options" | trans }}</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for iq in iqs %}
+               <tr>
+                  <td>{{ iq.id  }}</td>
+                  <td>{{ iq.customer_reference }}</td>
+                  <td>{{ iq.reset_date | date('Y-m-d h:i:s') }}
+                     {% if iq.reset_date | date('Y-m-d') == "now" | date('Y-m-d') and iq.restore_required == true %}
+                        &nbsp;<span class="text-danger">{{ 'iq.hasBeenReset' | trans }}</span>
+                     {% endif %}
+                  </td>
+                  <td>
+                     {# They only work on a reset device, else it gives a 403 error #}
+                     <a href="{{ path('api_iq_details', {'iqId': iq.id}) }}" data-action="click->modal-show#onShow">
+                        <i class="fa fa-lg fa-eye" title='{{ "btn.show" | trans | capitalize }}'></i>
+                     </a>&nbsp;
+                     {% if iq.id in activatedIqIds and iq.restore_required == false %}
+                        <a href="{{ path('iq_otp', {'iqId': iq.id}) }}">
+                           <i class="fa fa-lg fa-user-secret" title='{{ "btn.otp" | trans | capitalize }}'></i>
+                        </a>&nbsp;
+                     {% endif %}
+                     {% if iq.restore_required == true %}
+                        <a href="{{ path('iq_restore', {'iqId': iq.id}) }}"  data-action="click->modal-show#onRestore" data-modal-show-target='restoreButton'>
+                           <i class="fa fa-lg fa-recycle" title='{{ "btn.restore" | trans | capitalize }}'></i>
+                        </a>&nbsp;
+                     {% endif %}
+                     {% if iq.id not in activatedIqIds %}
+                        <a href="{{ path('iq_activate', {'iqId': iq.id}) }}">
+                           <i class="fa fa-lg fa-key" title='{{ "btn.activate" | trans | capitalize }}'></i>
+                        </a>&nbsp;
+                     {% endif %}
+                  </td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
+{% else %}
+   <div class="alert alert-secondary mt-3" role="alert">{{"messages.results0" | trans }}</div>
+{% endif %}
+{{ include('common/_alert.html.twig') }}

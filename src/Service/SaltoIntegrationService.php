@@ -31,13 +31,10 @@ class SaltoIntegrationService
    private $accessToken = null;
    private LoggerInterface $logger;
    private RequestStack $requestStack;
-   private $iqPin;
-   private $iqSecret;
-   private $command = [
-      'me' => '/me'
-   ];
+//   private $iqPin;
+//   private $iqSecret;
 
-   public function __construct(string $saltoTokenUrl, string $saltoApiBase, string $saltoApiUsername, string $saltoApiPassword, string $saltoClientId, string $saltoClientSecret, string $iqSecret, $iqPin, HttpClientInterface $client, LoggerInterface $logger, RequestStack $requestStack) {
+   public function __construct(string $saltoTokenUrl, string $saltoApiBase, string $saltoApiUsername, string $saltoApiPassword, string $saltoClientId, string $saltoClientSecret, HttpClientInterface $client, LoggerInterface $logger, RequestStack $requestStack) {
       $this->logger = $logger;
       $this->logger->debug('->SaltoIntegrationService construct start');
       $this->client = $client;
@@ -48,8 +45,8 @@ class SaltoIntegrationService
       $this->saltoApiPassword= $saltoApiPassword;
       $this->saltoClientId = $saltoClientId;
       $this->saltoClientSecret= $saltoClientSecret;
-      $this->iqSecret = $iqSecret;
-      $this->iqPin = $iqPin;
+      // $this->iqSecret = $iqSecret;
+//      $this->iqPin = $iqPin;
       $this->reconnect();
       $this->logger->debug('<-SaltoIntegrationService construct end');
    }
@@ -81,14 +78,10 @@ class SaltoIntegrationService
             ])
          ]);
          $statusCode = $response->getStatusCode();
-         // $statusCode = 200
          $contentType = $response->getHeaders()['content-type'][0];
-         // $contentType = 'application/json'
          $content = $response->getContent();
-         // $content = '{"id":521583, "name":"symfony-docs", ...}'
          $this->accessToken = $response->toArray();
          $this->accessToken['date'] = new \DateTime();
-         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
          return $this->accessToken;
       } catch (\Exception $e) {
          return null;
@@ -153,72 +146,97 @@ class SaltoIntegrationService
    }
 
    public function getMe() {
-      return $this->executeGetCommand('me');
+      return $this->executeCommand(Request::METHOD_GET, 'me');
+   }
+
+   public function getActivatedIQs($siteId) {
+      return $this->executeCommand(Request::METHOD_GET,'me/'.$siteId.'/activated_iqs');
+   }
+
+   public function restoreIQ($siteId, $iqId) {
+      return $this->executeCommand(Request::METHOD_POST, 'sites/'.$siteId.'/iqs/'.$iqId.'/restore');
    }
 
    public function getSites() {
-      return $this->executeGetCommand('sites');
+      return $this->executeCommand(Request::METHOD_GET, 'sites');
    }
 
    public function getIQsFromSite($siteId) {
-      return $this->executeGetCommand('sites/'.$siteId.'/iqs');
+      return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/iqs?orderby=id asc');
+   }
+
+   public function getIQFromSite($siteId, $iqId) {
+      return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/iqs/'.$iqId);
    }
 
    public function sendPinBySMSFromIqFromSite($siteId, $iqId) {
-      return $this->executeGetCommand('sites/'.$siteId.'/iqs/'.$iqId.'/pin');
+      return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/iqs/'.$iqId.'/pin');
    }
 
-   public function getSecretFromIqFromSite($siteId, $iqId) {
-      $otp = $this->calculateOTP($this->iqSecret,$this->iqPin);
-      return $this->executeGetCommand('sites/'.$siteId.'/iqs/'.$iqId.'/secret?otp='.$otp);
-   }
-
-   public function getLocksFromSite($siteId) {
-      return $this->executeGetCommand('sites/'.$siteId.'/locks');
-   }
-
-   public function getLockById($siteId, $lockId) {
-      return $this->executeGetCommand('sites/'.$siteId.'/locks/'.$lockId);
-   }
-
-   public function activateIq($siteId, $iqId, $newPin) {
-      if ($this->iqSecret !== null) {
-         $otp = $this->calculateOTP();
-         $delta = $this->calculateDelta($newPin, $this->iqPin);
-         $this->logger->debug("OTP:\"$otp\" delta:\"$delta\"");
-         return $this->executePutCommand('sites/'.$siteId.'/iqs/'.$iqId.'/pin', [
-            'otp' => "$otp",
-            'delta' => "$delta",
-         ]);
+   public function getSecretFromIqFromSite($siteId, $iqId, $iqSecret = null, $pin = null) {
+      if ( $pin !== null && $iqSecret !== null ) {
+         $otp = $this->calculateOTP($iqSecret, $pin);
+         return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/iqs/'.$iqId.'/secret?otp='.$otp);
+      } else {
+         return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/iqs/'.$iqId.'/secret');
       }
    }
 
-   public function unlock($siteId, $lockId) {
-      $otp = $this->calculateOTP();
+   public function getLocksFromSite($siteId) {
+      return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/locks');
+   }
+
+   public function getLockById($siteId, $lockId) {
+      return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/locks/'.$lockId);
+   }
+
+   public function getLockSettingsById($siteId, $lockId) {
+      return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/locks/'.$lockId.'/settings');
+   }
+
+   public function setNewPIN($siteId, $iqId, $iqSecret, $oldPin, $newPin) {
+      if ($iqSecret !== null) {
+         $otp = $this->calculateOTP($iqSecret, $newPin, $oldPin);
+         $delta = $this->calculateDelta($newPin, $oldPin);
+         $this->logger->debug("OTP:\"$otp\" delta:\"$delta\"");
+         return $this->executeCommand(Request::METHOD_PUT, 'sites/'.$siteId.'/iqs/'.$iqId.'/pin', [
+            'otp' => "$otp",
+            'delta' => "$delta",
+         ]);         
+      }
+   }
+
+   public function unlock($siteId, $lockId, $iqSecret, $pin) {
+      $otp = $this->calculateOTP($iqSecret, $pin);
       //dump($otp);
-      return $this->executePatchCommand('sites/'.$siteId.'/locks/'.$lockId.'/locking', [
+      return $this->executeCommand(Request::METHOD_PATCH, 'sites/'.$siteId.'/locks/'.$lockId.'/locking', [
          'otp' => "$otp",
          'locked_state' => 'unlocked',
       ]);
    }
 
-   private function executeGetCommand($command) {
-      return $this->executeCommand(Request::METHOD_GET, $command);
+   public function activateOfficeMode($siteId, $lockId, $iqSecret, $pin) {
+      $otp = $this->calculateOTP($iqSecret, $pin);
+      return $this->executeCommand(Request::METHOD_PATCH, 'sites/'.$siteId.'/locks/'.$lockId.'/locking', [
+         'otp' => "$otp",
+         'locked_state' => 'office_mode',
+      ]);
    }
 
-   private function executePatchCommand($command, $params) {
-      $body = json_encode($params);
-      return $this->executeCommand(Request::METHOD_PATCH, $command, $body);
+   public function deactivateOfficeMode($siteId, $lockId, $iqSecret, $pin) {
+      $otp = $this->calculateOTP($iqSecret, $pin);
+      return $this->executeCommand(Request::METHOD_PATCH, 'sites/'.$siteId.'/locks/'.$lockId.'/locking', [
+         'otp' => "$otp",
+         'locked_state' => 'locked',
+      ]);
    }
 
-   private function executePutCommand($command, $params) {
-      $body = json_encode($params);
-      //dump($body);
-      $this->logger->debug("Body:$body");
-      return $this->executeCommand(Request::METHOD_PUT, $command, $body);
-   }
-
-   private function executeCommand($type, $command, $body = null): ?array {
+   private function executeCommand($type, $command, array $parameters = null): ?array {
+      $body = null;
+      if ($parameters !== null) {
+         $body = json_encode($parameters);
+         $this->logger->debug("Body:$body");
+      }
       try {
          if (!$this->reconnect()) {
             throw new Exception('Could not connect!!');
@@ -231,16 +249,49 @@ class SaltoIntegrationService
          $response = $this->client->request($type,$this->saltoApiBase.'/'. $command, $params);
          $statusCode = $response->getStatusCode();
          $this->logger->debug('Status Code:'.$statusCode);
-         if ($statusCode === Response::HTTP_OK || Response::HTTP_NO_CONTENT) {
-            $this->logger->debug($response->getContent());
-            $reponseArray = $response->toArray();
-            $reponseArray['status'] = 'success';
-            return $reponseArray; 
+         switch ($statusCode) {
+            case Response::HTTP_OK:
+               $this->logger->debug($response->getContent());
+               $reponseArray = $response->toArray();
+               $reponseArray['status'] = 'success';
+               return $reponseArray; 
+            case Response::HTTP_NO_CONTENT:
+               $reponseArray = [];
+               $reponseArray['status'] = 'success';
+               return $reponseArray;
+            default:
+               $body = $response->getContent(false);
+               if ( $body !== null ) {
+                  //{"ErrorCode":"3102","Message":"Request execution failed with code: pin_not_changed"}
+                  $body = json_decode($body, true);
+                  return [
+                     'status' => 'error',
+                     'errorCode' => $body['ErrorCode'],
+                     'message' => $body['Message'],
+                  ];
+               } else {
+                  return [
+                     'status' => 'error',
+                     'message' => 'HTTP Status: '.$statusCode,
+                  ];
+               }
          }
          return null;
          // throw new Exception('HTTP Status NOT Ok');
       } catch (Exception $e) {
          $this->logger->error($e->getMessage());
+         if ($statusCode === Response::HTTP_FORBIDDEN) {
+            $this->logger->error($response->getContent(false));
+            $body = $response->getContent(false);
+            if ( $body !== null ) {
+               $body = json_decode($body, true);
+               return [
+                  'status' => 'error',
+                  'errorCode' => $body['ErrorCode'],
+                  'message' => $body['Message'],
+               ];
+            }
+         }
          return [
             'status' => 'error',
             'message' => $e->getMessage(),
@@ -262,10 +313,18 @@ class SaltoIntegrationService
       return $params;
    }
 
-   public function calculateOTP() {
-      $this->logger->debug('->Calculate OTP: PIN:'.$this->iqPin.' Secret:'.$this->iqSecret);
+   public function calculateOTP($iqSecret, $pin, $oldPin = null ) {
+      if ($oldPin === null) {
+         $this->logger->debug('->Calculate OTP: PIN:'.$pin.' Secret:'.$iqSecret);
+      } else {
+         $this->logger->debug('->Calculate OTP with old PIN: OldPIN:'.$oldPin.' Secret:'.$iqSecret);
+      }
+      $pin = str_pad($pin,4,0,STR_PAD_LEFT);
+      if ($oldPin) {
+         $pin = str_pad($oldPin,4,0,STR_PAD_LEFT);
+      }
       $date = new DateTime('now', new DateTimeZone('UTC'));
-      $otp = $date->format('YmdHis').$this->iqSecret.$this->iqPin;
+      $otp = $date->format('YmdHis').$iqSecret.$pin;
       //dump($otp);
       $md5 = md5($otp);
       //dump($md5);
@@ -276,30 +335,30 @@ class SaltoIntegrationService
    public function calculateDelta(int $newPin, int $oldPin) {
       $this->logger->debug('->Calculate Delta New Pin:'.$newPin.' OldPin:'.$oldPin);
       $delta = ((10000 + ($newPin - $oldPin) % 10000) % 10000);
-      return $delta;
+      return str_pad($delta,4,0);
    }
 
-   public function getIqPin(): ?string
-   {
-      return $this->iqPin;
-   }
+   // public function getIqPin(): ?string
+   // {
+   //    return $this->iqPin;
+   // }
 
-   public function setIqPin($iqPin): self
-   {
-      $this->iqPin = $iqPin;
+   // public function setIqPin($iqPin): self
+   // {
+   //    $this->iqPin = $iqPin;
 
-      return $this;
-   }
+   //    return $this;
+   // }
 
-   public function getIqSecret(): ?string
-   {
-      return $this->iqSecret;
-   }
+   // public function getIqSecret(): ?string
+   // {
+   //    return $this->iqSecret;
+   // }
 
-   public function setIqSecret($iqSecret): self
-   {
-      $this->iqSecret = $iqSecret;
+   // public function setIqSecret($iqSecret): self
+   // {
+   //    $this->iqSecret = $iqSecret;
 
-      return $this;
-   }
+   //    return $this;
+   // }
 }

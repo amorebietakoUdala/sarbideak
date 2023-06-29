@@ -39,3 +39,14 @@
 	</swal-button>
 	<swal-param name="allowEscapeKey" value="true"/>
 </template>
+
+<template id="message">
+	<swal-title>
+		{{ messageTitle|default('messageTitle' | trans) }}
+	</swal-title>
+   <swal-html>{{ messageBody|default('messageBody' | trans) }}</swal-html>
+	<swal-button type="confirm">
+		{{ btnOk|default('btn.ok' | trans) }}
+	</swal-button>
+	<swal-param name="allowEscapeKey" value="true"/>
+</template>

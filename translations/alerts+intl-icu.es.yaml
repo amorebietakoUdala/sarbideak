@@ -4,3 +4,6 @@ message.error: "Error"
 btn.accept: "Aceptar"
 btn.ok: "Aceptar"
 btn.cancel: "Cancelar"
+
+messageTitle: "Title"
+messageBody: "Body"

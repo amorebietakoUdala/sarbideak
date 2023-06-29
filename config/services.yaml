@@ -33,6 +33,7 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
             $siteId: '%env(SITE_ID)%'
+            $limit: 50
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -59,5 +60,5 @@ services:
             $saltoClientId: '%env(SALTO_CLIENT_ID)%'
             $saltoClientSecret: '%env(SALTO_CLIENT_SECRET)%'
             $client: '@.debug.http_client'
-            $iqSecret: '%env(IQ_SECRET)%'
-            $iqPin: '%env(IQ_PIN)%'
+            # $iqSecret: '%env(IQ_SECRET)%'
+#            $iqPin: '%env(IQ_PIN)%'

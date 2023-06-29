@@ -16,7 +16,7 @@ main {
 }
 
 .logo {
-    height: 100px;
+    height: auto;
     width: auto;
 }
 
@@ -55,14 +55,19 @@ span.text-danger ul li {
 	font-size: 0.8rem;
 }
 
-.modal-body button {
+/* .modal-body button {
     display: none;
 }
 
 .modal-body #modal-cancel-button {
     display: none;
-}
+} */
 
 table a {
     text-decoration: none;
+}
+
+.fill {
+    max-width: -moz-available;
+    max-width: -webkit-fill-available;
 }

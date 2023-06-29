@@ -56,44 +56,4 @@ class User extends BaseUser implements AMREUserInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastLogin;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Audit::class, mappedBy="user")
-     */
-    private $audits;
-
-    public function __construct()
-    {
-        $this->audits = new ArrayCollection();
-    }
-
-    /**
-     * @return Collection<int, Audit>
-     */
-    public function getAudits(): Collection
-    {
-        return $this->audits;
-    }
-
-    public function addAudit(Audit $audit): self
-    {
-        if (!$this->audits->contains($audit)) {
-            $this->audits[] = $audit;
-            $audit->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAudit(Audit $audit): self
-    {
-        if ($this->audits->removeElement($audit)) {
-            // set the owning side to null (unless already changed)
-            if ($audit->getUser() === $this) {
-                $audit->setUser(null);
-            }
-        }
-
-        return $this;
-    }
 }

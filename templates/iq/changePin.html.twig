@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.title.change.pin' | trans }}{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		{{ form_errors(form) }}
+		{{ form_start(form, {'attr': {'class': 'container-fluid form-group'}}) }}
+		<div class="row align-items-center mb-1">
+			<div class="col-lg-1">
+				{{ form_row(form.oldPin) }}
+			</div>
+			<div class="col-lg-1">
+				{{ form_row(form.newPin) }}
+			</div>
+			<div class="col-lg-auto">
+				<button class="btn btn-primary" type="submit">{{ 'btn.send' | trans }}</button>
+			</div>
+		</div>
+		{{ form_widget(form.secret,{ 'value': secret }) }}
+		{{ form_widget(form.customerReference,{ 'value': customerReference }) }}
+		{{ form_end(form) }}
+	</main>
+{% endblock %}

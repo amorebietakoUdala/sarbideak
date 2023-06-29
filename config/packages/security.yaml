@@ -51,7 +51,6 @@ security:
         - { path: ^/login$, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_SALTO }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_GIZA_BALIABIDEAK }
 
 when@test:
     security:

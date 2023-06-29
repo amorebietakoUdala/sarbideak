@@ -1,39 +1,46 @@
 {% if locks is defined and locks|length > 0 %}
-<div>
-   <table class="table"
-      data-toggle="table"
-      data-table-target="table"
-      data-page-number="{{ page }}" 
-      data-page-size="{{ pageSize }}"
-      data-page-sortName="{{ sortName }}"
-      data-page-sortOrder="{{ sortOrder }}">
-      <thead>
-         <tr>
-            <th data-sortable="true">{{ 'lock.floor' | trans }}</th>
-            <th data-sortable="true">{{ 'lock.description' | trans }}</th>
-            <th data-sortable="true" data-field="options">{{"table.options" | trans }}</th>
-         </tr>
-      </thead>
-      <tbody>
-         {% for lock in locks %}
+   <div>
+      <table class="table"
+         data-toggle="table"
+         data-table-target="table"
+         data-page-number="{{ page }}" 
+         data-page-size="{{ pageSize }}"
+         data-page-sortName="{{ sortName }}"
+         data-page-sortOrder="{{ sortOrder }}">
+         <thead>
             <tr>
-               <td>{{ lock.floor ? lock.floor.customer_reference : '' }}</td>
-               <td>{{ lock.customer_reference }}</td>
-               <td>
-                  <a href="{{ path('lock_unlock', {'lockId': lock.id}) }}" data-action="click->table#onClick" data-pagination="false"><i class="fa fa-unlock" title='{{ "btn.unlock" | trans | capitalize }}'></i></a>&nbsp;
-               </td>
+               <th data-sortable="true">{{ 'lock.floor' | trans }}</th>
+               <th data-sortable="true">{{ 'lock.description' | trans }}</th>
+               <th data-sortable="true" data-field="options">{{"table.options" | trans }}</th>
             </tr>
-         {% endfor %}
-      </tbody>
-   </table>
-</div>
+         </thead>
+         <tbody>
+            {% for lock in locks %}
+               <tr>
+                  <td>{{ lock.floor ? lock.floor.customer_reference : '' }}</td>
+                  <td>{{ lock.customer_reference }}</td>
+                  <td>
+                     {% set lockedState = lock.locked_state %}
+                     {% set lockId = lock.id %}
+                     <a href="{{ path('api_unlock', {'lockId': lock.id}) }}" 
+                        data-action="click->toggle#onUnlock"><i class="fa fa-lg fa-unlock" title='{{ "btn.unlock" | trans | capitalize }}'></i></a>&nbsp;
+                     <a href="{{ path('api_deactivate_office_mode', {'lockId': lock.id}) }}" 
+                        class="{{lockedState == 'locked' and lockId == lock.id ? 'd-none' }}" 
+                        data-toggle-target="toggleOn"
+                        data-action="click->toggle#onDeactivateOfficeMode">
+                        <i class="fa fa-lg fa-toggle-on" title='{{ "btn.deactivateOfficeMode" | trans | capitalize }}'></i></a>&nbsp;
+                     <a href="{{ path('api_activate_office_mode', {'lockId': lock.id}) }}"  
+                        class="{{lockedState == 'office_mode' and lockId == lock.id ? 'd-none' }}"
+                        data-toggle-target="toggleOff"
+                        data-action="click->toggle#onActivateOfficeMode">
+                        <i class="fa fa-lg fa-toggle-off" data-toggle-target="toggleOff" title='{{ "btn.activateOfficeMode" | trans | capitalize }}'></i></a>&nbsp;
+                  </td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </div>
 {% else %}
    <div class="alert alert-secondary mt-3" role="alert">{{"messages.results0" | trans }}</div>
 {% endif %}
-{# <span class="pull-right">
-   <a href="{{ path('owner_new') }}" class="btn btn-primary rounded-circle fixed-bottom-right z-index-100">
-      <i class="fa fa-plus" title='{{ "btn.new" | trans | capitalize }}'></i>
-   </a>
-</span> #}
 {{ include('common/_alert.html.twig') }}
-</div>

@@ -25,17 +25,23 @@ class Audit
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $lockDescription;
+    private $element;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="audits")
+     * @ORM\ManyToOne(targetEntity=User::class)
      */
     private $user;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $operation;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $result;
+
 
     public function getId(): ?int
     {
@@ -54,14 +60,14 @@ class Audit
         return $this;
     }
 
-    public function getLockDescription(): ?string
+    public function getElement(): ?string
     {
-        return $this->lockDescription;
+        return $this->element;
     }
 
-    public function setLockDescription(?string $lockDescription): self
+    public function setElement(?string $element): self
     {
-        $this->lockDescription = $lockDescription;
+        $this->element = $element;
 
         return $this;
     }
@@ -78,6 +84,18 @@ class Audit
         return $this;
     }
 
+    public function getOperation(): ?string
+    {
+        return $this->operation;
+    }
+
+    public function setOperation(string $operation): self
+    {
+        $this->operation = $operation;
+
+        return $this;
+    }    
+
     public function getResult(): ?string
     {
         return $this->result;
@@ -90,11 +108,12 @@ class Audit
         return $this;
     }
 
-    public static function createAudit(\DateTime $date, User $user, string $lockDescription, string $result) {
+    public static function createAudit(\DateTime $date, User $user, string $element, string $operation, string $result) {
         $audit = new Audit();
         $audit->setDate($date);
-        $audit->setLockDescription($lockDescription);
+        $audit->setElement($element);
         $audit->setUser($user);
+        $audit->setOperation($operation);
         $audit->setResult($result);
         return $audit;
     }

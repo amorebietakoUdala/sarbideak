@@ -1,0 +1,16 @@
+<div class="modal fade" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-toggle-target="modal" data-modal-show-target="modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ 'title.sending' | trans }}</h5>
+			</div>
+			<div class="modal-body d-flex flex-column justify-content-center align-items-center">
+				<img src="{{ asset('build/images/spinner.gif') }}" class="fill" data-modal-show-target="spinner">
+				<div class="alert alert-secondary text-center" data-iq-target="resultText" data-modal-show-target="resultText">{{ 'message.thisCanTakeSomeTime' | trans }}</div>
+				<div class="col-lg-auto">
+					<button class="btn btn-primary mt-1 d-hidden" type='button' data-bs-dismiss="modal" aria-label="Close">{{ 'btn.close' | trans }}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
