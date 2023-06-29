@@ -3,7 +3,6 @@
         "@amorebietakoudala/stimulus-controller-bundle": "file:vendor/amorebietakoudala/stimulus-controller-bundle/assets",
         "@babel/core": "^7.17.0",
         "@babel/preset-env": "^7.16.0",
-        "@eonasdan/tempus-dominus": "^6.7.7",
         "@fortawesome/fontawesome-free": "^6.2.1",
         "@hotwired/stimulus": "^3.0.0",
         "@popperjs/core": "^2.11.6",
@@ -14,10 +13,6 @@
         "file-loader": "^6.0.0",
         "jquery": "3.6.1",
         "regenerator-runtime": "^0.13.9",
-        "select2": "^4.1.0-rc.0",
-        "select2-bootstrap-5-theme": "^1.3.0",
-        "sweetalert2": "11.4.9",
-        "tableexport.jquery.plugin": "^1.25.0",
         "webpack": "^5.74.0",
         "webpack-cli": "^4.10.0",
         "webpack-notifier": "^1.15.0"
