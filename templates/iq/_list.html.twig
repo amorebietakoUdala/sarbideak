@@ -19,7 +19,14 @@
             {% for iq in iqs %}
                <tr>
                   <td>{{ iq.id  }}</td>
-                  <td>{{ iq.customer_reference }}</td>
+                  <td>
+                     {% if iq.online %}
+                        <span class="badge rounded-pill bg-success" title="{{ 'label.online' | trans }}">&nbsp;</span>
+                     {% else %}
+                        <span class="badge rounded-pill bg-danger" title="{{ 'label.offline' | trans }}">&nbsp;</span>
+                     {% endif %}
+                     {{ iq.customer_reference }}
+                  </td>
                   <td>{{ iq.reset_date | date('Y-m-d h:i:s') }}
                      {% if iq.reset_date | date('Y-m-d') == "now" | date('Y-m-d') and iq.restore_required == true %}
                         &nbsp;<span class="text-danger">{{ 'iq.hasBeenReset' | trans }}</span>

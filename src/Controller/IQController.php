@@ -72,13 +72,9 @@ class IQController extends BaseController
                     'iqId' => $iqId,
                 ]);
                 if ($iq !== null) {
-                    $iq->setPin($data['newPin']);
-                    $iq->setSecret($data['secret']);
+                    $iq->updateIq($data['newPin'], $data['secret'], $data['customerReference']);
                 } else {
-                    $iq = new Iq();
-                    $iq->setPin($data['newPin']);
-                    $iq->setSecret($data['secret']);
-                    $iq->setIqId($iqId);
+                    $iq = Iq::createIq($iqId,$data['newPin'],$data['secret'],$data['customerReference']);
                 }
                 $this->em->persist($iq);
             } else {

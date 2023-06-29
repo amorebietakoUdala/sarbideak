@@ -27,6 +27,7 @@ class AuditController extends BaseController
         $this->limit = $limit;
         $this->translator = $translator;
     }
+    
     /**
      * @Route("/audit", name="audit_index")
      */

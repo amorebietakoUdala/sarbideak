@@ -18,7 +18,14 @@
             {% for lock in locks %}
                <tr>
                   <td>{{ lock.floor ? lock.floor.customer_reference : '' }}</td>
-                  <td>{{ lock.customer_reference }}</td>
+                  <td>
+                     {% if lock.online %}
+                        <span class="badge rounded-pill bg-success" title="{{ 'label.online' | trans }}">&nbsp;</span>
+                     {% else %}
+                        <span class="badge rounded-pill bg-danger" title="{{ 'label.offline' | trans }}">&nbsp;</span>
+                     {% endif %}
+                     {{ lock.customer_reference }}
+                  </td>
                   <td>
                      {% set lockedState = lock.locked_state %}
                      {% set lockId = lock.id %}

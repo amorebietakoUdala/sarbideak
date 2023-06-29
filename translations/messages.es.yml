@@ -98,6 +98,8 @@ label.no: "No"
 label.choose: "Seleccione una opción"
 label.oldPin: "PIN recibido"
 label.newPin: "PIN nuevo"
+label.online: "Online"
+label.offline: "Offline"
 
 ROLE_SALTO: "Usuario"
 ROLE_ADMIN: "Administrador"

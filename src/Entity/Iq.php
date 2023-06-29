@@ -89,4 +89,19 @@ class Iq
 
         return $this;
     }
+
+    public function updateIq($pin, $secret, $customerReference) {
+        $this->setPin($pin);
+        $this->setSecret($secret);
+        $this->setCustomerReference($customerReference);
+    }
+
+    public static function createIq($iqId, $pin, $secret, $customerReference): Iq {
+        $iq = new Iq();
+        $iq->setIqId($iqId);
+        $iq->setPin($pin);
+        $iq->setSecret($secret);
+        $iq->setCustomerReference($customerReference);
+        return $iq;
+    }
 }
