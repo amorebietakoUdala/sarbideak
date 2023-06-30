@@ -5,5 +5,5 @@ btn.accept: "Aceptar"
 btn.ok: "Aceptar"
 btn.cancel: "Cancelar"
 
-messageTitle: "Title"
-messageBody: "Body"
+messageTitle: "Titulo"
+messageBody: "Cuerpo"

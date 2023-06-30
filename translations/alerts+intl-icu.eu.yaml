@@ -4,3 +4,6 @@ message.error: "Akatsa"
 btn.accept: "Bai"
 btn.ok: "Onartu"
 btn.cancel: "Utzi"
+
+messageTitle: "Goiburua"
+messageBody: "Gorputza"

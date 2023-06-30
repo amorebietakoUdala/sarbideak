@@ -96,18 +96,6 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
-    "friendsofsymfony/jsrouting-bundle": {
-        "version": "2.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "2.3",
-            "ref": "a9f2e49180f75cdc71ae279a929c4b2e0638de84"
-        },
-        "files": [
-            "config/routes/fos_js_routing.yaml"
-        ]
-    },
     "monolog/monolog": {
         "version": "2.1.0"
     },
@@ -145,18 +133,6 @@
         },
         "files": [
             "config/packages/sensio_framework_extra.yaml"
-        ]
-    },
-    "stof/doctrine-extensions-bundle": {
-        "version": "1.7",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.2",
-            "ref": "e805aba9eff5372e2d149a9ff56566769e22819d"
-        },
-        "files": [
-            "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
     "symfony/apache-pack": {
@@ -285,23 +261,8 @@
     "symfony/inflector": {
         "version": "v5.0.8"
     },
-    "symfony/intl": {
-        "version": "v5.0.8"
-    },
     "symfony/ldap": {
         "version": "v5.0.8"
-    },
-    "symfony/mailer": {
-        "version": "5.4",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "4.3",
-            "ref": "2bf89438209656b85b9a49238c4467bff1b1f939"
-        },
-        "files": [
-            "config/packages/mailer.yaml"
-        ]
     },
     "symfony/maker-bundle": {
         "version": "1.0",
@@ -418,9 +379,6 @@
     "symfony/security-http": {
         "version": "v5.0.8"
     },
-    "symfony/serializer": {
-        "version": "v5.0.8"
-    },
     "symfony/service-contracts": {
         "version": "v2.0.1"
     },
@@ -526,21 +484,6 @@
     },
     "twig/twig": {
         "version": "v3.0.3"
-    },
-    "willdurand/js-translation-bundle": {
-        "version": "2.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.0",
-            "ref": "02b720a49f6d36b44d557e0b18e48bf09e0a8e07"
-        },
-        "files": [
-            "config/routes/js_translation.yaml"
-        ]
-    },
-    "willdurand/jsonp-callback-validator": {
-        "version": "v1.1.0"
     },
     "zendframework/zend-code": {
         "version": "3.4.1"

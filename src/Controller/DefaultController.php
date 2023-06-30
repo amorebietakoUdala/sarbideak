@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /** 
-* @IsGranted("ROLE_SALTO")
+* @IsGranted("ROLE_SARBIDEAK")
 */
 class DefaultController extends BaseController
 {

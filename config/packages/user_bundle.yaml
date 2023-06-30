@@ -1,7 +1,7 @@
 user:
     class: 'App\Entity\User'
 #    form_type: 'App\Form\UserType'
-    allowedRoles: ["ROLE_SALTO", "ROLE_ADMIN"]
+    allowedRoles: ["ROLE_SARBIDEAK", "ROLE_ADMIN"]
     domain: '%env(LDAP_ACCOUNTDOMAINNAME)%'
     #internet_domain: '%env(LDAP_INTERNET_DOMAIN)%'
     ldap_users_dn: '%env(LDAP_USERS_DN)%'

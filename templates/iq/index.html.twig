@@ -3,14 +3,13 @@
 {% block title %}{{ 'app.title.iq.index' | trans }}{% endblock %}
 
 {% block body %}
-	<main class="container-fluid" {{ stimulus_controller('modal-show') }} data-action="hidden.bs.modal->modal-show#resetModal">
+	<main class="container-fluid" {{ stimulus_controller('modal') }}
+        data-action="iq-actions:startAction->modal#startModal iq-actions:endAction->modal#endModal hidden.bs.modal->modal#resetMessage">
         <div id="content" class="container-fluid" {{ stimulus_controller('table', 
                 { 'url': path('iq_index'),
                 'exportName': 'iqs',
             })}} 
-            {# data-action="entity:success->table#refreshContent"  #}
-            data-table-target="content"
-            >
+            data-table-target="content">
             {{ include('iq/_list.html.twig', { 
                 'iqs': iqs,
                 'pageSize' : pageSize,
@@ -19,6 +18,6 @@
                 'sortOrder': sortOrder,
             }) }}
         </div>
-        {{ include('iq/_spinnerModal.html.twig') }}
+        {{ include('common/_spinnerModal.html.twig') }}
 	</main>
 {% endblock %}

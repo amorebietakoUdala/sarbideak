@@ -1,6 +1,3 @@
 security.login.remember_me: "Oroitu"
 
-ROLE_SALTO: "Erabiltzailea"
-ROLE_UNDERTAKER: "Lurperatzailea"
-ROLE_GRAVESELLER: "HAZ"
-ROLE_TECHNICAL_OFFICE: "Bulego teknikoa"
+ROLE_SARBIDEAK: "Erabiltzailea"

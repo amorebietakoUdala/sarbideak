@@ -1,5 +1,6 @@
 {% if locks is defined and locks|length > 0 %}
-   <div>
+   <div {{ stimulus_controller('lock-actions') }}>
+      {{ include('common/_spinnerModal.html.twig') }}
       <table class="table"
          data-toggle="table"
          data-table-target="table"
@@ -27,20 +28,18 @@
                      {{ lock.customer_reference }}
                   </td>
                   <td>
-                     {% set lockedState = lock.locked_state %}
-                     {% set lockId = lock.id %}
                      <a href="{{ path('api_unlock', {'lockId': lock.id}) }}" 
-                        data-action="click->toggle#onUnlock"><i class="fa fa-lg fa-unlock" title='{{ "btn.unlock" | trans | capitalize }}'></i></a>&nbsp;
+                        data-action="click->lock-actions#onUnlock"><i class="fa fa-lg fa-unlock" title='{{ "btn.unlock" | trans | capitalize }}'></i></a>&nbsp;
                      <a href="{{ path('api_deactivate_office_mode', {'lockId': lock.id}) }}" 
-                        class="{{lockedState == 'locked' and lockId == lock.id ? 'd-none' }}" 
-                        data-toggle-target="toggleOn"
-                        data-action="click->toggle#onDeactivateOfficeMode">
+                        class="{{ lock.locked_state == 'locked' ? 'd-none' }}" 
+                        data-lock-actions-target="toggleOn"
+                        data-action="click->lock-actions#onDeactivateOfficeMode">
                         <i class="fa fa-lg fa-toggle-on" title='{{ "btn.deactivateOfficeMode" | trans | capitalize }}'></i></a>&nbsp;
                      <a href="{{ path('api_activate_office_mode', {'lockId': lock.id}) }}"  
-                        class="{{lockedState == 'office_mode' and lockId == lock.id ? 'd-none' }}"
-                        data-toggle-target="toggleOff"
-                        data-action="click->toggle#onActivateOfficeMode">
-                        <i class="fa fa-lg fa-toggle-off" data-toggle-target="toggleOff" title='{{ "btn.activateOfficeMode" | trans | capitalize }}'></i></a>&nbsp;
+                        class="{{lock.locked_state == 'office_mode' ? 'd-none' }}"
+                        data-lock-actions-target="toggleOff"
+                        data-action="click->lock-actions#onActivateOfficeMode">
+                        <i class="fa fa-lg fa-toggle-off" data-lock-actions-target="toggleOff" title='{{ "btn.activateOfficeMode" | trans | capitalize }}'></i></a>&nbsp;
                   </td>
                </tr>
             {% endfor %}

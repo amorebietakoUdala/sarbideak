@@ -1,6 +1,3 @@
 security.login.remember_me: "Recordarme"
 
-ROLE_SALTO: "Usuario"
-ROLE_UNDERTAKER: "Enterrador"
-ROLE_GRAVESELLER: "SAC"
-ROLE_TECHNICAL_OFFICE: "Oficina técnica"
+ROLE_SARBIDEAK: "Usuario"

@@ -20,7 +20,7 @@ security:
                 property: username
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_SALTO]
+        ROLE_ADMIN: [ROLE_SARBIDEAK]
 
     firewalls:
         dev:
@@ -47,9 +47,9 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/$, roles: ROLE_SALTO }
+        - { path: ^/$, roles: ROLE_SARBIDEAK }
         - { path: ^/login$, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: ROLE_SALTO }
+        - { path: ^/, roles: ROLE_SARBIDEAK }
         - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
