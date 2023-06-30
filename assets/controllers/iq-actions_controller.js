@@ -1,7 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
 
-import { Modal } from 'bootstrap';
-
 import { fetchResponse } from '../modules/fetchResponse';
 
 export default class extends Controller {

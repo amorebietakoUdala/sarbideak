@@ -14,8 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @IsGranted("ROLE_SALTO")
- * @Route("/api")
+ * @IsGranted("ROLE_SARBIDEAK")
+ * @Route("/{_locale}/api")
  */
 class ApiController extends AbstractController
 {

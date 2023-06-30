@@ -38,7 +38,7 @@
                         <i class="fa fa-lg fa-eye" title='{{ "btn.show" | trans | capitalize }}'></i>
                      </a>&nbsp;
                      {% if iq.id in activatedIqIds and iq.restore_required == false %}
-                        <a href="{{ path('iq_otp', {'iqId': iq.id}) }}">
+                        <a href="{{ path('iq_otp', {'iqId': iq.id}) }}" data-action="click->table#onClick" data-pagination="false">
                            <i class="fa fa-lg fa-user-secret" title='{{ "btn.otp" | trans | capitalize }}'></i>
                         </a>&nbsp;
                      {% endif %}
@@ -48,7 +48,7 @@
                         </a>&nbsp;
                      {% endif %}
                      {% if iq.id not in activatedIqIds %}
-                        <a href="{{ path('iq_activate', {'iqId': iq.id}) }}">
+                        <a href="{{ path('iq_activate', {'iqId': iq.id}) }}" data-action="click->table#onClick" data-pagination="false">
                            <i class="fa fa-lg fa-key" title='{{ "btn.activate" | trans | capitalize }}'></i>
                         </a>&nbsp;
                      {% endif %}

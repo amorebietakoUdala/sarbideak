@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 /** 
-* @IsGranted("ROLE_SALTO")
+* @IsGranted("ROLE_SARBIDEAK")
 */
 class SaltoIntegrationService
 {

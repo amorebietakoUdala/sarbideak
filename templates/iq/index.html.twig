@@ -9,9 +9,7 @@
                 { 'url': path('iq_index'),
                 'exportName': 'iqs',
             })}} 
-            {# data-action="entity:success->table#refreshContent"  #}
-            data-table-target="content"
-            >
+            data-table-target="content">
             {{ include('iq/_list.html.twig', { 
                 'iqs': iqs,
                 'pageSize' : pageSize,

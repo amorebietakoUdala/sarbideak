@@ -2,7 +2,6 @@ messages.appTitle: "Sarbideak"
 
 app.title.lock.index: "Cerraduras"
 app.title.iq.index: "IQs"
-app.title.lock.otp: "OTP"
 app.title.change.pin: "Cambiar el PIN"
 title.sending: "Enviando"
 
@@ -10,37 +9,16 @@ navitem.administration: "Administración"
 navitem.users: "Usuarios"
 navitem.locks: "Cerraduras"
 navitem.audits: "Auditoria"
-navitem.otp: "OTP"
 navitem.iqs: "IQs"
 
 link.logout: "Salir"
-
-security.login.username: "Nombre de usuario"
-security.login.password: "Password"
-security.login.remember_me: "Recordarme"
-security.login.submit: "Entrar"
-security.login.invalid_credentials: 'El usuario y contraseña no son correctos'
-security.login.system_error: 'Debido a un error del sistema, no se puede comprobar el usuario'
-security.login.remember_password: 'Se te ha olvidado la contraseña?'
-security.password:
-security.resetted: 'La contraseña se ha cambiado'
-btn.loginera.itzuli: 'Volver a la página de login'
-'Credenciales no válidas.': 'Credenciales no válidas.'
-
-user.id: "Id"
-user.username: "Nombre de usuario"
-user.firstName: "Nombre"
-user.roles: "Roles"
-user.email: "Email"
-user.new_password: "Nueva contraseña"
-user.repeat_new_password: "Repetir nueva contraseña"
 
 lock.floor: "Piso"
 lock.description: "Description"
 
 iq.id: "Id"
 iq.description: "Descripción"
-iq.resetDate: "Reset date"
+iq.resetDate: "Fecha de reseteo"
 iq.hasBeenReset: "El IQ se ha reseteado"
 
 audit.id: "Id"
@@ -50,38 +28,21 @@ audit.element: "Elemento"
 audit.operation: "Operación"
 audit.result: "Resultado"
 
-btn.cancel: "Volver"
 btn.unlock: "Abrir"
-btn.save: "Guardar"
 btn.new: "Nuevo"
-btn.search: "Buscar"
 btn.show: "Ver"
 btn.edit: "Editar"
 btn.delete: "Borrar"
-btn.clean: "Limpiar"
-btn.yes: "Sí"
-btn.no: "No"
 btn.close: "Cerrar"
 btn.activateOfficeMode: "Activar modo de paso"
 btn.deactivateOfficeMode: "Desactivar modo de paso"
-btn.getPin: "Obtener el Pin (Por SMS)"
-btn.getSecret: "Obtener el Secret"
 btn.send: "Enviar"
 btn.activate: "Activar IQ"
-btn.restore: "Restore IQ"
+btn.restore: "Restaurar IQ"
 btn.otp: "Obtener OTP"
 
-
-messages.confirmacion: "Confirmación"
 messages.successfullyUnlocked: "La cerradura se ha abierto correctamente"
-messages.confirmationDetail: "¿Esta seguro de que desea eliminar el registro?"
-messages.results0: "No se han encontrado resultados"
-messages.si: "Sí"
-messages.no: "No"
-messages.userSaved: "El usuario se ha guardado correctamente"
-messages.userDeleted: "El usuario se ha eliminado correctamente"
-messages.existingUser: "El nombre de usuario o el email ya existe"
-message.thisCanTakeSomeTime: "Esto puede tardar un poco..."
+messages.thisCanTakeSomeTime: "Esto puede tardar un poco..."
 messages.officeModeEnabled: "Modo de paso activado hasta nueva orden" 
 messages.officeModeDisabled: "Modo de paso desactivado" 
 messages.getSecretSuccess: "El secreto es: {secret}"
@@ -92,17 +53,12 @@ messages.iqSuccessfullyRestored: "El IQ se ha restaurado correctamente"
 messages.noSecretAndPinForThisIQ: "El PIN y el secret de este IQ no están almacenados. Compruebe que esté activado."
 messages.noIQAttachedToLock: "No hay un IQ asociado a la cerradura. Asigne la cerradura a un IQ primero."
 messages.otpSuccessfullyGenerated: "El OTP se ha generado correctamente: '{otp}'. Es válido por 3 minutos"
+messages.results0: "No se han encontrado resultados"
 
-label.yes: "Sí"
-label.no: "No"
-label.choose: "Seleccione una opción"
 label.oldPin: "PIN recibido"
 label.newPin: "PIN nuevo"
 label.online: "Online"
 label.offline: "Offline"
-
-ROLE_SALTO: "Usuario"
-ROLE_ADMIN: "Administrador"
 
 table.options: "Opciones"
 
@@ -114,4 +70,3 @@ activate_iq: "Activar IQ"
 get_secret: "Obtener secreto del IQ"
 get_otp: "Obtener OTP"
 restore_iq: "Restaurar IQ"
-"Operation cannot be executed. IQ restore is required": "No se puede realizar la operación. Hay que restaurar el IQ"

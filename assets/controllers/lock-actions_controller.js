@@ -1,6 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 
-import { fetchResponse, doFetch } from '../modules/fetchResponse';
+import { fetchResponse } from '../modules/fetchResponse';
 
 export default class extends Controller {
    static targets = ['toggleOn', 'toggleOff'];
