@@ -3,7 +3,8 @@
 {% block title %}{{ 'app.title.lock.index' | trans }}{% endblock %}
 
 {% block body %}
-	<main class="container-fluid" {{ stimulus_controller('toggle') }} data-action="hidden.bs.modal->toggle#resetMessage">
+	<main class="container-fluid" {{ stimulus_controller('modal') }} 
+        data-action="lock-actions:startAction->modal#startModal lock-actions:endAction->modal#endModal hidden.bs.modal->modal#resetMessage"
         <div id="content" class="container-fluid" {{ stimulus_controller('table', 
                 { 'url': path('lock_index'),
                 'exportName': 'locks',
@@ -17,6 +18,5 @@
                 'sortOrder': sortOrder,
             }) }}
         </div>
-        {{ include('lock/_spinnerModal.html.twig') }}
 	</main>
 {% endblock %}

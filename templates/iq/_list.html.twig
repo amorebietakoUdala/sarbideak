@@ -1,5 +1,5 @@
 {% if iqs is defined and iqs|length > 0 %}
-   <div>
+   <div {{ stimulus_controller('iq-actions') }}>
       <table class="table"
          data-toggle="table"
          data-table-target="table"
@@ -34,7 +34,7 @@
                   </td>
                   <td>
                      {# They only work on a reset device, else it gives a 403 error #}
-                     <a href="{{ path('api_iq_details', {'iqId': iq.id}) }}" data-action="click->modal-show#onShow">
+                     <a href="{{ path('api_iq_details', {'iqId': iq.id}) }}" data-action="click->iq-actions#onShow">
                         <i class="fa fa-lg fa-eye" title='{{ "btn.show" | trans | capitalize }}'></i>
                      </a>&nbsp;
                      {% if iq.id in activatedIqIds and iq.restore_required == false %}
@@ -43,7 +43,7 @@
                         </a>&nbsp;
                      {% endif %}
                      {% if iq.restore_required == true %}
-                        <a href="{{ path('iq_restore', {'iqId': iq.id}) }}"  data-action="click->modal-show#onRestore" data-modal-show-target='restoreButton'>
+                        <a href="{{ path('iq_restore', {'iqId': iq.id}) }}" data-action="click->iq-actions#onRestore" data-iq-actions-target='restoreButton'>
                            <i class="fa fa-lg fa-recycle" title='{{ "btn.restore" | trans | capitalize }}'></i>
                         </a>&nbsp;
                      {% endif %}
