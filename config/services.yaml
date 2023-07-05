@@ -54,4 +54,3 @@ services:
             $saltoApiPassword: '%env(SALTO_API_PASSWORD)%'
             $saltoClientId: '%env(SALTO_CLIENT_ID)%'
             $saltoClientSecret: '%env(SALTO_CLIENT_SECRET)%'
-            $client: '@.debug.http_client'

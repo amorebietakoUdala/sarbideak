@@ -11,8 +11,8 @@ export default class extends Controller {
       const response = await this.doFetch(e);
    }
 
-   async onRestore(event) {
-      event.preventDefault();
+   async onRestore(e) {
+      e.preventDefault();
       const response = await this.doFetch(e);
       if (response.status == 'success') {
          this.restoreButtonTarget.classList.add('d-none');
