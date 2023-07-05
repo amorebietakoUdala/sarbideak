@@ -34,7 +34,6 @@ export default class extends Controller {
    }
 
    showDetails(json) {
-      console.log(json);
       this.resultTextTarget.innerHTML='';
       if ( typeof json.message === 'object' ) {
          this.resultTextTarget.classList.remove('alert-secondary');
