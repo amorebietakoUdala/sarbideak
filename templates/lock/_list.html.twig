@@ -1,6 +1,5 @@
 {% if locks is defined and locks|length > 0 %}
    <div {{ stimulus_controller('lock-actions') }}>
-      {{ include('common/_spinnerModal.html.twig') }}
       <table class="table"
          data-toggle="table"
          data-table-target="table"
