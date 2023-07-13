@@ -1,5 +1,5 @@
 {% if locks is defined and locks|length > 0 %}
-   <div {{ stimulus_controller('lock-actions') }}>
+   <div>
       <table class="table"
          data-toggle="table"
          data-table-target="table"
@@ -16,7 +16,7 @@
          </thead>
          <tbody>
             {% for lock in locks %}
-               <tr>
+               <tr {{ stimulus_controller('lock-actions') }}>
                   <td>{{ lock.floor ? lock.floor.customer_reference : '' }}</td>
                   <td>
                      {% if lock.online %}
