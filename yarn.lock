@@ -7,7 +7,7 @@ __metadata:
 
 "@amorebietakoudala/stimulus-controller-bundle@file:vendor/amorebietakoudala/stimulus-controller-bundle/assets::locator=root-workspace-0b6124%40workspace%3A.":
   version: 0.1.0
-  resolution: "@amorebietakoudala/stimulus-controller-bundle@file:vendor/amorebietakoudala/stimulus-controller-bundle/assets#vendor/amorebietakoudala/stimulus-controller-bundle/assets::hash=036da7&locator=root-workspace-0b6124%40workspace%3A."
+  resolution: "@amorebietakoudala/stimulus-controller-bundle@file:vendor/amorebietakoudala/stimulus-controller-bundle/assets#vendor/amorebietakoudala/stimulus-controller-bundle/assets::hash=b459ea&locator=root-workspace-0b6124%40workspace%3A."
   dependencies:
     "@eonasdan/tempus-dominus": ^6.2.10
     "@hotwired/stimulus": ^3.0.0
@@ -18,7 +18,17 @@ __metadata:
     select2-bootstrap-5-theme: ^1.3.0
     sweetalert2: 11.4.8
     tableexport.jquery.plugin: ^1.26.0
-  checksum: 80ab506a472d3f8f822a62aad4c7d807aa3f8377ae08d75223bb04dada4696554a09a9aaa0c2efde8e5763f595aba7effcdddbe35ad2c048f9e53d8ba52db3fb
+  peerDependencies:
+    "@eonasdan/tempus-dominus": ^6.2.10
+    "@hotwired/stimulus": ^3.0.0
+    bootstrap: ^5.2.3
+    bootstrap-table: 1.21.1
+    jquery: 3.6.1
+    select2: ^4.1.0-rc.0
+    select2-bootstrap-5-theme: ^1.3.0
+    sweetalert2: 11.4.8
+    tableexport.jquery.plugin: ^1.26.0
+  checksum: 2fb4fa9b6d14d7c1d631aa76d80eb91121040b3ec8167f546b0a04c155831cd1a66b9f2215e3d30dc611391a979e0c85c28e6c63585f5e71b8c02d78972324fb
   languageName: node
   linkType: hard
 
@@ -6678,23 +6688,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^6.0.0, semver@npm:^6.1.1, semver@npm:^6.1.2, semver@npm:^6.3.0":
-  version: 6.3.1
-  resolution: "semver@npm:6.3.1"
-  bin:
-    semver: bin/semver.js
-  checksum: ae47d06de28836adb9d3e25f22a92943477371292d9b665fb023fae278d345d508ca1958232af086d85e0155aee22e313e100971898bbb8d5d89b8b1d4054ca2
-  languageName: node
-  linkType: hard
-
-"semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.8":
-  version: 7.4.0
-  resolution: "semver@npm:7.4.0"
+"semver@npm:^7.5.2":
+  version: 7.5.4
+  resolution: "semver@npm:7.5.4"
   dependencies:
     lru-cache: ^6.0.0
   bin:
     semver: bin/semver.js
-  checksum: debf7f4d6fa36fdc5ef82bd7fc3603b6412165c8a3963a30be0c45a587be1a49e7681e80aa109da1875765741af24edc6e021cee1ba16ae96f649d06c5df296d
+  checksum: 12d8ad952fa353b0995bf180cdac205a4068b759a140e5d3c608317098b3575ac2f1e09182206bf2eb26120e1c0ed8fb92c48c592f6099680de56bb071423ca3
   languageName: node
   linkType: hard
 
