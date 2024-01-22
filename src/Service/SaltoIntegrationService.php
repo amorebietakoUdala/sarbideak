@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -21,32 +21,22 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class SaltoIntegrationService
 {
 
-   private HttpClientInterface $client;
-   private $saltoTokenUrl = null;
-   private $saltoApiBase = null;
-   private $saltoApiUsername = null;
-   private $saltoApiPassword = null;
-   private $saltoClientId = null;
-   private $saltoClientSecret = null;
    private $accessToken = null;
-   private LoggerInterface $logger;
-   private RequestStack $requestStack;
-//   private $iqPin;
-//   private $iqSecret;
 
-   public function __construct(string $saltoTokenUrl, string $saltoApiBase, string $saltoApiUsername, string $saltoApiPassword, string $saltoClientId, string $saltoClientSecret, HttpClientInterface $client, LoggerInterface $logger, RequestStack $requestStack) {
-      $this->logger = $logger;
+   public function __construct(
+      private readonly string $saltoTokenUrl, 
+      private readonly string $saltoApiBase, 
+      private readonly string $saltoApiUsername, 
+      private readonly string $saltoApiPassword, 
+      private readonly string $saltoClientId, 
+      private readonly string $saltoClientSecret, 
+      private readonly HttpClientInterface $client, 
+      private readonly LoggerInterface $logger, 
+      private readonly RequestStack $requestStack
+      ) {
       $this->logger->debug('->SaltoIntegrationService construct start');
-      $this->client = $client;
-      $this->requestStack = $requestStack;
-      $this->saltoTokenUrl = $saltoTokenUrl;
-      $this->saltoApiBase = $saltoApiBase;
-      $this->saltoApiUsername = $saltoApiUsername;
-      $this->saltoApiPassword= $saltoApiPassword;
-      $this->saltoClientId = $saltoClientId;
-      $this->saltoClientSecret= $saltoClientSecret;
-      // $this->iqSecret = $iqSecret;
-//      $this->iqPin = $iqPin;
+      // Use reconnect true to force asking another token even if it's not expired.
+      //$this->reconnect(true);
       $this->reconnect();
       $this->logger->debug('<-SaltoIntegrationService construct end');
    }
@@ -83,7 +73,7 @@ class SaltoIntegrationService
          $this->accessToken = $response->toArray();
          $this->accessToken['date'] = new \DateTime();
          return $this->accessToken;
-      } catch (\Exception $e) {
+      } catch (\Exception) {
          return null;
       }
    }
@@ -126,7 +116,7 @@ class SaltoIntegrationService
                return true;
             }
             return false;
-         } catch (\Exception $e) {
+         } catch (\Exception) {
             return false;
          }
       }
@@ -319,9 +309,9 @@ class SaltoIntegrationService
       } else {
          $this->logger->debug('->Calculate OTP with old PIN: OldPIN:'.$oldPin.' Secret:'.$iqSecret);
       }
-      $pin = str_pad($pin,4,0,STR_PAD_LEFT);
+      $pin = str_pad((string) $pin,4,0,STR_PAD_LEFT);
       if ($oldPin) {
-         $pin = str_pad($oldPin,4,0,STR_PAD_LEFT);
+         $pin = str_pad((string) $oldPin,4,0,STR_PAD_LEFT);
       }
       $date = new DateTime('now', new DateTimeZone('UTC'));
       $otp = $date->format('YmdHis').$iqSecret.$pin;

@@ -1,21 +1,24 @@
 {% trans_default_domain domain|default('messages') %}
 
 {% for msg in app.session.flashBag.get('success') %}
-	<div class="alert alert-success">
+	<div class="alert alert-success alert-dismissible fade show" role="alert">
 		{{ msg | trans}}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ "btn.close" | trans | capitalize }}"></button>
 	</div>
 {% endfor %}
 {% for msg in app.session.flashBag.get('error') %}
-	<div class="alert alert-danger">
+	<div class="alert alert-danger alert-dismissible fade show" role="alert">
 		{% if message is defined %}
 			{{ msg | trans({'%message%' : message},"messages", app.request.locale) }}
 		{% else %}
 			{{ msg | trans }}
 		{% endif %}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ "btn.close" | trans | capitalize }}"></button>
 	</div>
 {% endfor %}
 {% for msg in app.session.flashBag.get('warning') %}
-	<div class="alert alert-warning">
-		{{ msg | trans | capitalize }}
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		{{ msg | trans }}
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="{{ "btn.close" | trans | capitalize }}"></button>
 	</div>
 {% endfor %}

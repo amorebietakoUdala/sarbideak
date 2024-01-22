@@ -7,30 +7,22 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AuditRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/** 
-* @IsGranted("ROLE_ADMIN")
-* @Route("/{_locale}")
-*/
+#[IsGranted('ROLE_ADMIN')]
+#[Route(path: '/{_locale}')]
 class AuditController extends BaseController
 {
 
-    private AuditRepository $repo;
-    private TranslatorInterface $translator;
-    private $limit;
-
-
-    public function __construct(AuditRepository $repo, TranslatorInterface $translator, $limit = 50) 
+    public function __construct(
+        private readonly AuditRepository $repo, 
+        private readonly TranslatorInterface $translator, 
+        private $limit = 50
+    )
     {
-        $this->repo = $repo;
-        $this->limit = $limit;
-        $this->translator = $translator;
     }
     
-    /**
-     * @Route("/audit", name="audit_index")
-     */
+    #[Route(path: '/audit', name: 'audit_index')]
     public function index(Request $request): Response
     {
         $this->loadQueryParameters($request);

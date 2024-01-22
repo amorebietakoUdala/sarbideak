@@ -5,41 +5,27 @@ namespace App\Entity;
 use App\Repository\AuditRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=AuditRepository::class)
- */
+#[ORM\Entity(repositoryClass: AuditRepository::class)]
 class Audit
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $date;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $element;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class)
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $user;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $operation;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $result;
 
 

@@ -24,8 +24,12 @@ class BaseController extends AbstractController
             $this->queryParams['returnUrl'] = null;
             $this->queryParams = array_merge($this->queryParams, $request->query->all());
             if ( $this->queryParams !== null ) {
-                $query = parse_url($this->queryParams['returnUrl'], PHP_URL_QUERY);
-                parse_str($query,$query);
+                $query = parse_url((string) $this->queryParams['returnUrl'], PHP_URL_QUERY);
+                if ( $query === null) {
+                    $query = [];
+                } else {
+                    parse_str($query,$query);
+                }
                 $this->queryParams = array_merge($this->queryParams, $query);
             }
         }

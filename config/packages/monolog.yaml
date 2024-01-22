@@ -47,7 +47,6 @@ when@prod:
                 # max number of log files to keep
                 # defaults to zero, which means infinite files
                 max_files: 10
-
             nested:
                 type: stream
                 path: php://stderr

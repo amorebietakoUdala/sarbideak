@@ -18,3 +18,6 @@ yarn-error.log
 .yarn/
 .env.local.*
 composer.json.*
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

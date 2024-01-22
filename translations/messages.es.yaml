@@ -54,6 +54,7 @@ messages.noSecretAndPinForThisIQ: "El PIN y el secret de este IQ no están almac
 messages.noIQAttachedToLock: "No hay un IQ asociado a la cerradura. Asigne la cerradura a un IQ primero."
 messages.otpSuccessfullyGenerated: "El OTP se ha generado correctamente: '{otp}'. Es válido por 3 minutos"
 messages.results0: "No se han encontrado resultados"
+message.cantConnectToApi: "El API no responde. Intentadlo más tarde."
 
 label.oldPin: "PIN recibido"
 label.newPin: "PIN nuevo"

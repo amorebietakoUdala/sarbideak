@@ -5,36 +5,24 @@ namespace App\Entity;
 use App\Repository\IqRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=IqRepository::class)
- */
+#[ORM\Entity(repositoryClass: IqRepository::class)]
 class Iq
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=16, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 16, nullable: true)]
     private $secret;
 
-    /**
-     * @ORM\Column(type="string", length=4, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 4, nullable: true)]
     private $pin;
 
-    /**
-     * @ORM\Column(type="string", length=50, unique=true)
-     */
+    #[ORM\Column(type: 'string', length: 50, unique: true)]
     private $iqId;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $customerReference;
 
     public function getId(): ?int
