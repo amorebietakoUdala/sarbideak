@@ -55,18 +55,12 @@ messages.noSecretAndPinForThisIQ: "IQ honen PINa eta zenbaki ezkutua ez daude go
 messages.noIQAttachedToLock: "Zerraila hau ez dago IQ batera ezarria. Zerraila IQ batera esleitu lehenik."
 messages.otpSuccessfullyGenerated: "OTPa behar bezala sortu da: '{otp}'. 3 minuturako baliogarria da."
 messages.results0: "Ez da emaitzarik aurkitu"
+message.cantConnectToApi: "APIak ez du erantzuten. Saiatu geroago."
 
-
-# label.yes: "Bai"
-# label.no: "Ez"
-# label.choose: "Aukera bat hautatu"
 label.oldPin: "Jasotako PINa"
 label.newPin: "PIN berria"
 label.online: "Online"
 label.offline: "Offline"
-
-# ROLE_SARBIDEAK: "Erabiltzailea"
-# ROLE_ADMIN: "Administratzailea"
 
 table.options: "Aukerak"
 

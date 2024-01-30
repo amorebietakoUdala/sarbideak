@@ -6,37 +6,37 @@ use App\Service\SaltoIntegrationService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/** 
-* @IsGranted("ROLE_SARBIDEAK")
-* @Route("/{_locale}")
-*/
+#[IsGranted('ROLE_SARBIDEAK')]
+#[Route(path: '/{_locale}')]
 class LockController extends BaseController
 {
 
-    const STATUS_LOCKED='locked';
-    const STATUS_OFFICE_MODE='office_mode';
-    const STATUS_UNLOCKED='unlocked';
+    final public const STATUS_LOCKED='locked';
+    final public const STATUS_OFFICE_MODE='office_mode';
+    final public const STATUS_UNLOCKED='unlocked';
 
-    private SaltoIntegrationService $salto;
-    private string $siteId;
-
-    public function __construct(SaltoIntegrationService $salto, string $siteId) {
-        $this->salto = $salto;
-        $this->siteId = $siteId;
+    public function __construct(private readonly SaltoIntegrationService $salto, private readonly string $siteId)
+    {
     }
 
     /**
-    * Show lock index page.
-    * @Route("/lock", name="lock_index")
-    */
+     * Show lock index page.
+     */
+    #[Route(path: '/lock', name: 'lock_index')]
     public function index(Request $request): Response
     {
         $this->loadQueryParameters($request);
         $locks = $this->salto->getLocksFromSite($this->siteId); 
+        if ( !array_key_exists('items',$locks) ) {
+            $this->addFlash('error', 'message.cantConnectToApi');
+            $locks = [];
+        } else {
+            $locks = $locks['items'];
+        }
         return $this->render('lock/index.html.twig', [
-            'locks' => $locks['items'],
+            'locks' => $locks,
 
         ]);
     }

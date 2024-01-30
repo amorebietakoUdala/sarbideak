@@ -10,40 +10,32 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * @IsGranted("ROLE_SARBIDEAK")
- * @Route("/{_locale}/api")
- */
+#[IsGranted('ROLE_SARBIDEAK')]
+#[Route(path: '/{_locale}/api')]
 class ApiController extends AbstractController
 {
 
-    const STATUS_LOCKED='locked';
-    const STATUS_OFFICE_MODE='office_mode';
-    const STATUS_UNLOCKED='unlocked';
+    final public const STATUS_LOCKED='locked';
+    final public const STATUS_OFFICE_MODE='office_mode';
+    final public const STATUS_UNLOCKED='unlocked';
 
-    private SaltoIntegrationService $salto;
-    private string $siteId;
-    private EntityManagerInterface $em;
-    private TranslatorInterface $translator;
-    private IqRepository $iqRepo;
-
-    public function __construct(SaltoIntegrationService $salto, EntityManagerInterface $em, TranslatorInterface $translator, IqRepository $iqRepo, string $siteId) {
-        $this->salto = $salto;
-        $this->siteId = $siteId;
-        $this->em = $em;
-        $this->translator = $translator;
-        $this->iqRepo = $iqRepo;
+    public function __construct(
+        private readonly SaltoIntegrationService $salto, 
+        private readonly EntityManagerInterface $em, 
+        private readonly TranslatorInterface $translator, 
+        private readonly IqRepository $iqRepo, 
+        private readonly string $siteId)
+    {
     }
 
     /**
-    * Unlock the selected lock. The look needs to be attached to an IQ. 
-    * The IQ needs to be previously activated.
-    * 
-    * @Route("/lock/{lockId}/unlock", name="api_unlock")
-    */
+     * Unlock the selected lock. The look needs to be attached to an IQ.
+     * The IQ needs to be previously activated.
+     */
+    #[Route(path: '/lock/{lockId}/unlock', name: 'api_unlock')]
     public function unlock($lockId): JsonResponse {
         $lock = $this->salto->getLockById($this->siteId, $lockId);
         if ( !$this->checkIfLockIsAttachedToIQ($lock) ) {
@@ -71,9 +63,9 @@ class ApiController extends AbstractController
     }
 
     /**
-    * Activate office mode for a lock. 
-    * @Route("/lock/{lockId}/activate-office-mode", name="api_activate_office_mode")
-    */
+     * Activate office mode for a lock.
+     */
+    #[Route(path: '/lock/{lockId}/activate-office-mode', name: 'api_activate_office_mode')]
     public function activateOfficeMode($lockId): JsonResponse {
         $lock = $this->salto->getLockById($this->siteId, $lockId);
         if ( !$this->checkIfLockIsAttachedToIQ($lock) ) {
@@ -101,9 +93,9 @@ class ApiController extends AbstractController
     }   
 
     /**
-    * Deactivate office mode for a lock. 
-    * @Route("/lock/{lockId}/deactivate-office-mode", name="api_deactivate_office_mode")
-    */
+     * Deactivate office mode for a lock.
+     */
+    #[Route(path: '/lock/{lockId}/deactivate-office-mode', name: 'api_deactivate_office_mode')]
     public function deactivateOfficeMode($lockId): JsonResponse {
         $lock = $this->salto->getLockById($this->siteId, $lockId);
         if ( !$this->checkIfLockIsAttachedToIQ($lock) ) {
@@ -131,10 +123,9 @@ class ApiController extends AbstractController
     }
 
     /**
-    * Get IQ details. Status restore_required and so on.
-    *
-    * @Route("/iq/{iqId}", name="api_iq_details")
-    */
+     * Get IQ details. Status restore_required and so on.
+     */
+    #[Route(path: '/iq/{iqId}', name: 'api_iq_details')]
     public function iqDetails($iqId): JsonResponse {
         $result = $this->salto->getIQFromSite($this->siteId, $iqId);
         if ($result !== null && $result['status'] === 'success') {
@@ -152,9 +143,8 @@ class ApiController extends AbstractController
     /**
      * Needed after a the IQ has been reset. When restore_required is true you need to restore the IQ config in order to work.
      * If it's not done this way it gives a 403 Error when you try to unlock door.
-     * 
-     * @Route("/iq/{iqId}/restore", name="iq_restore")
-    */
+     */
+    #[Route(path: '/iq/{iqId}/restore', name: 'iq_restore')]
     public function restore($iqId): JsonResponse {
         $result = $this->salto->restoreIQ($this->siteId, $iqId);
         if ($result !== null && $result['status'] === 'success') {
@@ -171,7 +161,7 @@ class ApiController extends AbstractController
 
     private function getIQFromLockId($lockId): ?Iq {
         $lock = $this->salto->getLockById($this->siteId, $lockId);
-        $iqData = $lock['iq'] !== null ? $lock['iq'] : null;
+        $iqData = $lock['iq'] ?? null;
         if ( $iqData !== null ) {
             $iq = $this->iqRepo->findOneBy(['iqId' => $iqData['id']]);
             return $iq;
@@ -180,7 +170,7 @@ class ApiController extends AbstractController
     }
 
     private function checkIfLockIsAttachedToIQ($lock): bool {
-        $iq = $lock['iq'] !== null ? $lock['iq'] : null;
+        $iq = $lock['iq'] ?? null;
         if ( $iq !== null ) {
             return true;
         }

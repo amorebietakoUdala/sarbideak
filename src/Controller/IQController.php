@@ -10,35 +10,22 @@ use App\Service\SaltoIntegrationService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/** 
-* @IsGranted("ROLE_ADMIN")
-* @Route("/{_locale}")
-*/
+#[IsGranted('ROLE_ADMIN')]
+#[Route(path: '/{_locale}')]
 class IQController extends BaseController
 {
-    private SaltoIntegrationService $salto;
-    private string $siteId;
-    private EntityManagerInterface $em;
-    private TranslatorInterface $translator;
-    private IqRepository $repo;
-
-    public function __construct(SaltoIntegrationService $salto, EntityManagerInterface $em, string $siteId, TranslatorInterface $translator, IqRepository $repo) {
-        $this->salto = $salto;
-        $this->siteId = $siteId;
-        $this->em = $em;
-        $this->translator = $translator;
-        $this->repo = $repo;
+    public function __construct(private readonly SaltoIntegrationService $salto, private readonly EntityManagerInterface $em, private readonly string $siteId, private readonly TranslatorInterface $translator, private readonly IqRepository $repo)
+    {
     }
 
     /**
      * Shows IQ index page
-     * 
-     * @Route("/iq", name="iq_index")
      */
+    #[Route(path: '/iq', name: 'iq_index')]
     public function index(Request $request): Response
     {
         $this->loadQueryParameters($request);
@@ -55,9 +42,8 @@ class IQController extends BaseController
     /**
      * Activates the selected IQ.
      * Only works on a reset device. Else it's gives a 403 Error.
-     * 
-     * @Route("/iq/{iqId}/activate", name="iq_activate")
-    */
+     */
+    #[Route(path: '/iq/{iqId}/activate', name: 'iq_activate')]
     public function activate(Request $request, $iqId) {
         $secret = $customerReference = null;
         $form = $this->createForm(PinType::class);
@@ -98,13 +84,13 @@ class IQController extends BaseController
     }
 
     /**
-    * @Route("/iq/{iqId}/pin", name="get_pin")
-    */
+     * @Route("/iq/{iqId}/pin", name="get_pin")
+     */
     // public function getPin(Request $request, $iqId) {
     //     $result = $this->salto->sendPinBySMSFromIqFromSite($this->siteId, $iqId);
     //     if ($result !== null && $result['status'] === 'success') {
     //         $audit = Audit::createAudit(new \DateTime(), $this->getUser(),$iqId, 'get_pin','success');
-    //         $this->addFlash('success', $this->translator->trans('messages.pinSuccessfullySent'));           
+    //         $this->addFlash('success', $this->translator->trans('messages.pinSuccessfullySent'));
     //     } else {
     //         $audit = Audit::createAudit(new \DateTime(), $this->getUser(),$iqId, 'get_pin', 'error: '. ($result !== null ? $result['message']: ''));
     //         $this->addFlash('error', $result['message']);
@@ -114,14 +100,12 @@ class IQController extends BaseController
     //     $form = $this->createForm(PinType::class);
     //     return $this->redirectToRoute('iq_index');
     // }
-
     /**
-    * Generates an OTP with for that IQ.
-    * The IQ needs to be activated previously, otherwise it won't work.
-    * Only needed to activate other devices like mobile phones.
-    *
-    * @Route("/iq/{iqId}/otp", name="iq_otp")
-    */
+     * Generates an OTP with for that IQ.
+     * The IQ needs to be activated previously, otherwise it won't work.
+     * Only needed to activate other devices like mobile phones.
+     */
+    #[Route(path: '/iq/{iqId}/otp', name: 'iq_otp')]
     public function otp($iqId): Response
     {
         $iq = $this->repo->findOneBy(['iqId' => $iqId]);
