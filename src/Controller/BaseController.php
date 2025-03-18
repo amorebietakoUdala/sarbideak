@@ -18,7 +18,7 @@ class BaseController extends AbstractController
             $request->getMethod() === Request::METHOD_POST || 
             $request->getMethod() === Request::METHOD_DELETE ) {
             $this->queryParams['page'] = 1;
-            $this->queryParams['pageSize'] = 10;
+            $this->queryParams['pageSize'] = 20;
             $this->queryParams['sortName'] = 0;
             $this->queryParams['sortOrder'] = 'asc';
             $this->queryParams['returnUrl'] = null;

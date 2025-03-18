@@ -173,7 +173,15 @@ class SaltoIntegrationService
    }
 
    public function getLocksFromSite($siteId) {
-      return $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/locks');
+      $allResults = [];
+      $skip = 0;
+      do {
+         $results = $this->executeCommand(Request::METHOD_GET, 'sites/'.$siteId.'/locks?skip='.$skip);
+          $allResults = array_merge($allResults, $results['items']); 
+         $skip += 20;
+      } while (isset($results["next_page_link"]) && $results["next_page_link"] !== null);
+      $results['items'] = $allResults;
+      return $results;
    }
 
    public function getLockById($siteId, $lockId) {
